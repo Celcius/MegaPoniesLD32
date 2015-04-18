@@ -52,6 +52,8 @@ public class Arena : MonoBehaviour {
                 controller.transform.rotation = _spawners[i].rotation;
 
                 controller.GetComponent<PlayerController>().setPlayerNum(i);
+
+                controller.name = "PLayer" + i;
             }
         }
 

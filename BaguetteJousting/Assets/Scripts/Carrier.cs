@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Carrier : MonoBehaviour {
+
+    public delegate void OnPickupDelegate(Pickup pickup);
 	
 	Pickup pickup;
 	float grabRange = 8.0f;
 	[SerializeField]
 	Transform _pickupSocket;
+    OnPickupDelegate onPickupDelegateCallback;
+
 
 
 	
@@ -25,7 +29,7 @@ public class Carrier : MonoBehaviour {
 	
 
 	void Start () {
-		
+        //onPickupDelegateCallback = new OnPickupDelegate(defaultPickUpCallback);
 	}
 	
 	
@@ -35,13 +39,16 @@ public class Carrier : MonoBehaviour {
 		}
 		if (somePickup.PickedUp(this)){
 			pickup = somePickup;
+            pickup.carrier = this;
+            onPickupDelegateCallback(somePickup);
 			return true;
 		}
 		return false;
 	}
-	
-	
-	void FixedUpdate () {
+
+
+    protected virtual void FixedUpdate()
+    {
 		if(!this.IsCarrying()){
 			foreach (Pickup aPickup in Arena.instance.allPickups ){
 				float distanceToPickup = Vector3.Distance(aPickup.gameObject.transform.position, this.gameObject.transform.position);
@@ -51,6 +58,19 @@ public class Carrier : MonoBehaviour {
 			}
 		}
 	}
+
+    void defaultPickUpCallback(Pickup pickup)
+    {
+
+    }
+
+    public void setOnPickUpCallBack(OnPickupDelegate del)
+    {
+        onPickupDelegateCallback = del;
+
+    }
+
+    
 	
 	
 	
