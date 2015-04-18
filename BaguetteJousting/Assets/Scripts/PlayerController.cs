@@ -59,7 +59,8 @@ public class PlayerController : MonoBehaviour {
 
         if (_isStill)
         {
-            transform.RotateAround(_back.position, new Vector3(0.0f, x, 0.0f), ROTATE_SPEED * Time.deltaTime);
+            rotateRigidBodyAroundPointBy(rigidbody, _back.position, new Vector3(0, 1, 0), x * ROTATE_SPEED * Time.deltaTime);
+            //rigidBody.RotateAround(_back.position, new Vector3(0.0f, x, 0.0f), ROTATE_SPEED * Time.deltaTime);
             if(x != 0) 
                 _acceleration = ACCEL_ROTATE_MOD;
 
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour {
 
         _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
         scaleVal = 1/scaleVal*0.5f;
-                    Debug.Log(scaleVal);
+                    //Debug.Log(scaleVal);
         _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
 
         if(transform.position.y - _baseY < 2.8f)
@@ -173,5 +174,13 @@ public class PlayerController : MonoBehaviour {
             val = 0.0f;
         return val;
     }
+
+    public void rotateRigidBodyAroundPointBy(Rigidbody rb, Vector3 origin, Vector3 axis, float angle)
+    {
+        Quaternion q = Quaternion.AngleAxis(angle, axis);
+        rb.MovePosition(q * (rb.transform.position - origin) + origin);
+        rb.MoveRotation(rb.transform.rotation * q);
+    }
+ 
         
 }
