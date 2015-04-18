@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Carrier : MonoBehaviour {
 	
 	Pickup pickup;
-	float grabRange = 10;
+	float grabRange = 3.0f;
 	[SerializeField]
 	Transform _pickupSocket;
 
@@ -19,6 +19,7 @@ public class Carrier : MonoBehaviour {
     
     
     public bool IsCarrying(){
+//    Debug.Log(this + "is carrying" + ( (pickup != null)? "true": "false") );
 		return pickup != null;
 	}
 	

@@ -6,16 +6,24 @@ public class Pickup : MonoBehaviour {
 
 	
 	public bool PickedUp (Carrier someCarrier) {
-		if (carrier != null){
+		
+		if (someCarrier == null || someCarrier.pickupSocket == null){
 			return false;
 		}
 //		if(someCarrier.IsCarrying() ){
 //			return false; // or maybe make the
 //		}
 //		
-		transform.localPosition = new Vector3(0,0,0);
-		transform.SetParent(carrier.pickupSocket);
 		carrier = someCarrier;
+		Debug.Log(this + " was picked up by " + someCarrier);
+        transform.SetParent(someCarrier.pickupSocket);
+		transform.localPosition = new Vector3(0.2f,0.3f,-0.5f);
+		transform.rotation = someCarrier.transform.rotation;
+//		rigidbody.velocity = Vector3.zero;
+//		rigidbody.isKinematic = true;
+		
+//		rigidbody.detectCollisions = false;
+		
 		return true;
 	}
 	
