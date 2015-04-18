@@ -7,8 +7,10 @@ public class Arena : MonoBehaviour {
 	List<Pawn> _allPlayers = new List<Pawn>();
 	
 	private static Arena _instance;
-    
-    
+
+    [SerializeField]
+    List<Transform> _spawners;
+
 	//This is the public reference that other classes will use
 	public static Arena instance {
 		get {
@@ -32,11 +34,28 @@ public class Arena : MonoBehaviour {
 	}
 	
 	
-	
 	void Awake(){
 		Arena arena = Arena.instance;
 		if(arena != null) Debug.Log("Arena opened!");
-		else return;
+        else return;
+
+        int players = ServiceLocator.instance.getPlayers();
+
+        
+        for(int i = 0; i <players; i++)
+        {
+            if(i < _spawners.Count)
+            {
+                GameObject controller = (GameObject)Instantiate(Resources.Load("Prefabs/Player"));
+
+                controller.transform.position = _spawners[i].position;
+                controller.transform.rotation = _spawners[i].rotation;
+
+                controller.GetComponent<PlayerController>().setPlayerNum(i);
+            }
+        }
+
+
 	}
 	
 	// Use this for initialiList<Pickup> allPickups = new List<Pickup>();zation

@@ -66,6 +66,19 @@ public class PlayerController : MonoBehaviour {
                 break;
         }
 	}
+
+    public void setPlayerNum(int i)
+    {
+        if (i == 0)
+            _playerNum = PlayerNum.PLAYER_ONE;
+        if (i == 1)
+            _playerNum = PlayerNum.PLAYER_TWO;
+        if (i == 2)
+            _playerNum = PlayerNum.PLAYER_THREE;
+        if (i == 3)
+            _playerNum = PlayerNum.PLAYER_FOUR;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -138,7 +151,7 @@ public class PlayerController : MonoBehaviour {
 
         _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
         scaleVal = 1/scaleVal*0.5f;
-                    Debug.Log(scaleVal);
+
         _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
 
         if(transform.position.y - _baseY < 2.8f)
