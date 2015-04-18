@@ -77,6 +77,7 @@
     <Compile Include="Assets\PlayerController.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EditorLabel.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
+    <Compile Include="Assets\shadowComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />

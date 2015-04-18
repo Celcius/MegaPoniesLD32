@@ -16,20 +16,24 @@ public class PlayerController : MonoBehaviour {
     const float ACCEL_ROTATE_MOD = 0.05f;
     const float MAX_ACCEL_ROTATE = 0.5f;
     const float MAX_ACCEL = 0.4f;
-    const float ROTATE_SPEED = 170.0f;
+    const float ROTATE_SPEED = 200.0f;
     const float STILL_ROTATE_SPEED = 110.5f;
     const float MAX_SPEED_ROTATE_MOD = ROTATE_SPEED - STILL_ROTATE_SPEED;
-    const float MAX_SPEED = 30.0f;
+    const float MAX_SPEED = 12.0f;
     const float MAX_STILL_SPEED = 5.0f;
     const float MAX_BACK_SPEED = -10.0f;
     const float ACCEL_DECREASE = 1000.0f;
     const float MAX_SCALE = 3.0f;
-    const float MIN_SCALE = 0.5f;
+    const float MIN_SCALE = 1.0f;
+    const float SCALE_VAL = 1.5f;
     [SerializeField]
     PlayerNum _playerNum;
 
     [SerializeField]
     Transform _representation;
+
+    [SerializeField]
+    Transform _shadow;
 
     float _baseY = 0;
     bool _isStill = true;
@@ -78,8 +82,6 @@ public class PlayerController : MonoBehaviour {
         if (!noInput)
             _isStill = false;
 
-        Debug.Log("Input " + input + " " + _acceleration);
-
         if (input != 0 && Mathf.Sign(_acceleration) != Mathf.Sign(-input))
         {
             _acceleration = MAX_ACCEL * Mathf.Sign(-input);
@@ -111,11 +113,17 @@ public class PlayerController : MonoBehaviour {
             _acceleration = 0.0f;
         }
 
-        float scaleVal = transform.position.y / _baseY;
-        scaleVal = Mathf.Clamp(Mathf.Pow(scaleVal, 1),MIN_SCALE,MAX_SCALE);
-        _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
+        float scaleVal = Mathf.Clamp(transform.position.y / _baseY,MIN_SCALE,MAX_SCALE);
+        
+        scaleVal = (SCALE_VAL - 1) / 2 * scaleVal + 1 - (SCALE_VAL - 1) / 2;
 
-        rigidbody.MovePosition(transform.position + dirVector);
+        _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
+        scaleVal = 1/scaleVal*0.5f;
+                    Debug.Log(scaleVal);
+        _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+
+        if(transform.position.y - _baseY < 2.8f)
+            rigidbody.MovePosition(transform.position + dirVector);
         
 	
 	}
