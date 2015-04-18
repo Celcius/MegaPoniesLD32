@@ -16,9 +16,9 @@ public class Pickup : MonoBehaviour {
 //		
 		carrier = someCarrier;
 		Debug.Log(this + " was picked up by " + someCarrier);
-        transform.SetParent(someCarrier.pickupSocket);
+        transform.SetParent(carrier.pickupSocket);
 		transform.localPosition = new Vector3(0.2f,0.3f,-0.5f);
-		transform.rotation = someCarrier.transform.rotation;
+		transform.rotation = carrier.transform.rotation;
 //		rigidbody.velocity = Vector3.zero;
 //		rigidbody.isKinematic = true;
 		
