@@ -78,6 +78,14 @@ public class PlayerController : MonoBehaviour {
         if (!noInput)
             _isStill = false;
 
+        Debug.Log("Input " + input + " " + _acceleration);
+
+        if (input != 0 && Mathf.Sign(_acceleration) != Mathf.Sign(-input))
+        {
+            _acceleration = MAX_ACCEL * Mathf.Sign(-input);
+            _velocity = _velocity *0.6f;
+        }
+
         _acceleration = _acceleration + ACCEL_MOD * -input;
         _acceleration = Mathf.Clamp(_acceleration, -MAX_ACCEL, MAX_ACCEL);
 

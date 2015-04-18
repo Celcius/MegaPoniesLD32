@@ -70,6 +70,8 @@
     <Compile Include="Assets\BackRef.cs" />
     <Compile Include="Assets\Carrier.cs" />
     <Compile Include="Assets\FrontRef.cs" />
+    <Compile Include="Assets\LevelGUI.cs" />
+    <Compile Include="Assets\LevelLoader.cs" />
     <Compile Include="Assets\Pawn.cs" />
     <Compile Include="Assets\Pickup.cs" />
     <Compile Include="Assets\PlayerController.cs" />
