@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Pickup : MonoBehaviour {
-	Carrier carrier;
+	public Carrier carrier;
 
 	
 	public bool PickedUp (Carrier someCarrier) {
@@ -34,6 +34,11 @@ public class Pickup : MonoBehaviour {
 	public void dropped () {
 		carrier = null;
 	}
+
+    public bool isPickedUp()
+    {
+        return carrier != null;
+    }
 	
 	
 //	void FixedUpdate () {

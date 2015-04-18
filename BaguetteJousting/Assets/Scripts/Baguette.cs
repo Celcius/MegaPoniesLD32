@@ -6,8 +6,14 @@ public class Baguette : MonoBehaviour {
     public GameObject lateralColliderObject;
     public GameObject frontCollisionObject;
 
+    Pickup pickup;
+
 	// Use this for initialization
 	
+    void Start()
+    {
+        pickup = GetComponent<Pickup>();
+    }
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -16,7 +22,7 @@ public class Baguette : MonoBehaviour {
         if (baguette)
             checkForBaguetteDisarm(collision, baguette);
         else if (player)
-            killPlayer(player);
+            checkForKill(player);
 
 
         
@@ -39,9 +45,10 @@ public class Baguette : MonoBehaviour {
     }
 
 
-    private void killPlayer(PlayerController player)
+    private void checkForKill(PlayerController player)
     {
-        Destroy(player.gameObject);
+        if (pickup.isPickedUp() && player.gameObject != pickup.carrier.gameObject)
+            Destroy(player.gameObject);
     }
 
 
