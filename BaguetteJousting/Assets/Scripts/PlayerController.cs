@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
 
@@ -34,6 +35,8 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     Transform _shadow;
+    [SerializeField]
+    List<Transform> _bikes;
 
     TrailRenderer _trail;
 
@@ -54,15 +57,19 @@ public class PlayerController : MonoBehaviour {
         {
             case PlayerNum.PLAYER_ONE:
                 _trail.renderer.material = Resources.Load("Materials/Red") as Material;
+                _bikes[0].active = true;
                 break;
             case PlayerNum.PLAYER_TWO:
                 _trail.renderer.material = Resources.Load("Materials/Blue") as Material;
+                _bikes[1].active = true;
                 break;
             case PlayerNum.PLAYER_THREE:
                 _trail.renderer.material = Resources.Load("Materials/Yellow") as Material;
+                _bikes[2].active = true;
                 break;
             case PlayerNum.PLAYER_FOUR:
                 _trail.renderer.material = Resources.Load("Materials/Purple") as Material;
+                _bikes[3].active = true;
                 break;
         }
 	}
