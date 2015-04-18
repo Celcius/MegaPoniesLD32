@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Carrier : MonoBehaviour {
 	
 	Pickup pickup;
-	float grabRange = 3.0f;
+	float grabRange = 8.0f;
 	[SerializeField]
 	Transform _pickupSocket;
 

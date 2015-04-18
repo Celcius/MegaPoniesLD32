@@ -14,7 +14,11 @@ public class Baguette : MonoBehaviour {
         WarnParentOfCollision frontScript = frontCollision.GetComponent<WarnParentOfCollision>();
 
         lateralScript._onCollisionEnterDelegate = new WarnParentOfCollision.OnCollisionEnterDelegate(frontCollisionCallback);
-        frontScript._onTriggerEnterDelegate = new WarnParentOfCollision.OnTriggerEnterDelegate(lateralCollisionCallback);
+        lateralScript._onTriggerEnterDelegate = new WarnParentOfCollision.OnTriggerEnterDelegate(frontTriggerCallback);
+
+
+        frontScript._onCollisionEnterDelegate = new WarnParentOfCollision.OnCollisionEnterDelegate(lateralCollisionCallback);
+        frontScript._onTriggerEnterDelegate = new WarnParentOfCollision.OnTriggerEnterDelegate(lateralTriggerCallback);
 	}
 	
 	// Update is called once per frame
@@ -24,15 +28,42 @@ public class Baguette : MonoBehaviour {
 
     public void frontCollisionCallback(GameObject child, Collision collision)
     {
-        Debug.Log("Foddase");
-        collision.collider.rigidbody.AddForce(new Vector3(0, 50f, 0), ForceMode.Impulse);
+        Baguette baguette = collider.gameObject.GetComponent<Baguette>();
+        if (baguette)
+        {
+            DisarmOpponentBaguette(baguette);
+        }
     }
 
-    public void lateralCollisionCallback(GameObject child, Collider collider)
+    public void frontTriggerCallback(GameObject child, Collider collider)
+    {
+        Baguette baguette = collider.gameObject.GetComponent<Baguette>();
+        if (baguette)
+        {
+            DisarmOpponentBaguette(baguette);
+        }
+    }
+
+
+    public void lateralTriggerCallback(GameObject child, Collider collider)
+    {
+        rigidbody.AddForce(new Vector3(0, 50f, 0), ForceMode.Impulse);
+    }
+
+    public void lateralCollisionCallback(GameObject child, Collision collision)
     {
         rigidbody.AddForce(new Vector3(0, 50f, 0), ForceMode.Impulse);
     }
 
 
+
+
+
+    private void DisarmOpponentBaguette(Baguette baguette)
+    {
+        baguette.transform.SetParent(null);
+        baguette.rigidbody.isKinematic = false;
+        baguette.rigidbody.AddForce(new Vector3(0, 50f, 0), ForceMode.Impulse);  
+    }
 
 }
