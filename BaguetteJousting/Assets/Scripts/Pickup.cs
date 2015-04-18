@@ -6,6 +6,8 @@ public class Pickup : MonoBehaviour {
 
 	
 	public bool PickedUp (Carrier someCarrier) {
+		if(carrier != null)
+			return false;
 		
 		if (someCarrier == null || someCarrier.pickupSocket == null){
 			return false;
