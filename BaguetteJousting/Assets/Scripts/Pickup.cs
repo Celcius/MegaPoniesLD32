@@ -6,6 +6,8 @@ public class Pickup : MonoBehaviour {
 
 	
 	public bool PickedUp (Carrier someCarrier) {
+		if(carrier != null)
+			return false;
 		
 		if (someCarrier == null || someCarrier.pickupSocket == null){
 			return false;
@@ -21,8 +23,6 @@ public class Pickup : MonoBehaviour {
         transform.SetParent(carrier.pickupSocket);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(new Vector3(90,90,0));
-       // rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-		//rigidbody.velocity = Vector3.zero;*/
 
 		
 //		rigidbody.detectCollisions = false;

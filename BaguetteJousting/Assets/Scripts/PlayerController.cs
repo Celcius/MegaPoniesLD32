@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     Transform _shadow;
 
+    TrailRenderer _trail;
+
     float _baseY = 0;
     bool _isStill = true;
     float _acceleration = 0.0f;
@@ -46,7 +48,37 @@ public class PlayerController : MonoBehaviour {
         _front = GetComponentInChildren<FrontRef>().transform;
         _back = GetComponentInChildren<BackRef>().transform;
         _baseY = transform.position.y;
+        _trail = GetComponentInChildren<TrailRenderer>();
+        
+        switch(_playerNum)
+        {
+            case PlayerNum.PLAYER_ONE:
+                _trail.renderer.material = Resources.Load("Materials/Red") as Material;
+                break;
+            case PlayerNum.PLAYER_TWO:
+                _trail.renderer.material = Resources.Load("Materials/Blue") as Material;
+                break;
+            case PlayerNum.PLAYER_THREE:
+                _trail.renderer.material = Resources.Load("Materials/Yellow") as Material;
+                break;
+            case PlayerNum.PLAYER_FOUR:
+                _trail.renderer.material = Resources.Load("Materials/Purple") as Material;
+                break;
+        }
 	}
+
+    public void setPlayerNum(int i)
+    {
+        if (i == 0)
+            _playerNum = PlayerNum.PLAYER_ONE;
+        if (i == 1)
+            _playerNum = PlayerNum.PLAYER_TWO;
+        if (i == 2)
+            _playerNum = PlayerNum.PLAYER_THREE;
+        if (i == 3)
+            _playerNum = PlayerNum.PLAYER_FOUR;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -120,7 +152,6 @@ public class PlayerController : MonoBehaviour {
 
         _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
         scaleVal = 1/scaleVal*0.5f;
-                    //Debug.Log(scaleVal);
         _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
 
         if(transform.position.y - _baseY < 2.8f)

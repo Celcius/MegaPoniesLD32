@@ -76,10 +76,12 @@
     <Compile Include="Assets\Scripts\Pawn.cs" />
     <Compile Include="Assets\Scripts\Pickup.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\ServiceLocator.cs" />
     <Compile Include="Assets\Scripts\WarnParentOfCollision.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EditorLabel.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
     <Compile Include="Assets\shadowComponent.cs" />
+    <Compile Include="Assets\textUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
