@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     Transform _shadow;
 
+    TrailRenderer _trail;
+
     float _baseY = 0;
     bool _isStill = true;
     float _acceleration = 0.0f;
@@ -46,6 +48,23 @@ public class PlayerController : MonoBehaviour {
         _front = GetComponentInChildren<FrontRef>().transform;
         _back = GetComponentInChildren<BackRef>().transform;
         _baseY = transform.position.y;
+        _trail = GetComponentInChildren<TrailRenderer>();
+        
+        switch(_playerNum)
+        {
+            case PlayerNum.PLAYER_ONE:
+                _trail.renderer.material = Resources.Load("Materials/Red") as Material;
+                break;
+            case PlayerNum.PLAYER_TWO:
+                _trail.renderer.material = Resources.Load("Materials/Blue") as Material;
+                break;
+            case PlayerNum.PLAYER_THREE:
+                _trail.renderer.material = Resources.Load("Materials/Yellow") as Material;
+                break;
+            case PlayerNum.PLAYER_FOUR:
+                _trail.renderer.material = Resources.Load("Materials/Purple") as Material;
+                break;
+        }
 	}
 	
 	// Update is called once per frame
