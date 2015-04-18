@@ -1,77 +1,76 @@
 fileFormatVersion: 2
-guid: e10d09229f8c603458554b5ee2fa5575
+guid: ff852a25f366f48c8a15f0d3c2f0580c
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Cylinder
-    100004: Cylinder.001
-    100006: Cylinder.002
-    100008: Icosphere
-    100010: Icosphere.001
-    100012: Icosphere.002
-    100014: Icosphere.003
-    100016: Icosphere.004
-    100018: Icosphere.005
+    100000: Cylinder
+    100002: Cylinder_001
+    100004: Cylinder_002
+    100006: Icosphere
+    100008: Icosphere_001
+    100010: Icosphere_002
+    100012: Icosphere_003
+    100014: Icosphere_004
+    100016: Icosphere_005
+    100018: //RootNode
     100020: Sphere
-    100022: Sun
-    100024: Suzanne
-    100026: Torus.000
-    100028: Torus.001
-    400000: //RootNode
-    400002: Cylinder
-    400004: Cylinder.001
-    400006: Cylinder.002
-    400008: Icosphere
-    400010: Icosphere.001
-    400012: Icosphere.002
-    400014: Icosphere.003
-    400016: Icosphere.004
-    400018: Icosphere.005
+    100022: Suzanne
+    100024: Torus_000
+    100026: Torus_001
+    400000: Cylinder
+    400002: Cylinder_001
+    400004: Cylinder_002
+    400006: Icosphere
+    400008: Icosphere_001
+    400010: Icosphere_002
+    400012: Icosphere_003
+    400014: Icosphere_004
+    400016: Icosphere_005
+    400018: //RootNode
     400020: Sphere
-    400022: Sun
-    400024: Suzanne
-    400026: Torus.000
-    400028: Torus.001
+    400022: Suzanne
+    400024: Torus_000
+    400026: Torus_001
     2300000: Cylinder
-    2300002: Cylinder.001
-    2300004: Cylinder.002
+    2300002: Cylinder_001
+    2300004: Cylinder_002
     2300006: Icosphere
-    2300008: Icosphere.001
-    2300010: Icosphere.002
-    2300012: Icosphere.003
-    2300014: Icosphere.004
-    2300016: Icosphere.005
+    2300008: Icosphere_001
+    2300010: Icosphere_002
+    2300012: Icosphere_003
+    2300014: Icosphere_004
+    2300016: Icosphere_005
     2300018: Sphere
     2300020: Suzanne
-    2300022: Torus.000
-    2300024: Torus.001
+    2300022: Torus_000
+    2300024: Torus_001
     3300000: Cylinder
-    3300002: Cylinder.001
-    3300004: Cylinder.002
+    3300002: Cylinder_001
+    3300004: Cylinder_002
     3300006: Icosphere
-    3300008: Icosphere.001
-    3300010: Icosphere.002
-    3300012: Icosphere.003
-    3300014: Icosphere.004
-    3300016: Icosphere.005
+    3300008: Icosphere_001
+    3300010: Icosphere_002
+    3300012: Icosphere_003
+    3300014: Icosphere_004
+    3300016: Icosphere_005
     3300018: Sphere
     3300020: Suzanne
-    3300022: Torus.000
-    3300024: Torus.001
+    3300022: Torus_000
+    3300024: Torus_001
     4300000: Sphere
-    4300002: Icosphere.005
-    4300004: Cylinder.001
-    4300006: Icosphere.004
-    4300008: Icosphere.003
-    4300010: Icosphere.002
-    4300012: Icosphere.001
+    4300002: Icosphere_005
+    4300004: Cylinder_001
+    4300006: Icosphere_004
+    4300008: Icosphere_003
+    4300010: Icosphere_002
+    4300012: Icosphere_001
     4300014: Icosphere
     4300016: Cylinder
-    4300018: Torus.000
-    4300020: Torus.001
+    4300018: Torus_000
+    4300020: Torus_001
     4300022: Suzanne
-    4300024: Cylinder.002
+    4300024: Cylinder_002
+    7400000: Default Take
     9500000: //RootNode
   materials:
     importMaterials: 1
