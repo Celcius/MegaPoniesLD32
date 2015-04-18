@@ -20,7 +20,7 @@ public class Pickup : MonoBehaviour {
         transform.SetParent(carrier.pickupSocket);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(new Vector3(90,90,0));
-		rigidbody.velocity = Vector3.zero;
+		//rigidbody.velocity = Vector3.zero;
 
 		
 //		rigidbody.detectCollisions = false;
