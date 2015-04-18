@@ -65,16 +65,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ActivateRenderer.cs" />
-    <Compile Include="Assets\Arena.cs" />
-    <Compile Include="Assets\BackRef.cs" />
-    <Compile Include="Assets\Carrier.cs" />
-    <Compile Include="Assets\FrontRef.cs" />
-    <Compile Include="Assets\LevelGUI.cs" />
-    <Compile Include="Assets\LevelLoader.cs" />
-    <Compile Include="Assets\Pawn.cs" />
-    <Compile Include="Assets\Pickup.cs" />
-    <Compile Include="Assets\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\ActivateRenderer.cs" />
+    <Compile Include="Assets\Scripts\Arena.cs" />
+    <Compile Include="Assets\Scripts\BackRef.cs" />
+    <Compile Include="Assets\Scripts\Baguette.cs" />
+    <Compile Include="Assets\Scripts\Carrier.cs" />
+    <Compile Include="Assets\Scripts\FrontRef.cs" />
+    <Compile Include="Assets\Scripts\LevelGUI.cs" />
+    <Compile Include="Assets\Scripts\LevelLoader.cs" />
+    <Compile Include="Assets\Scripts\Pawn.cs" />
+    <Compile Include="Assets\Scripts\Pickup.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\WarnParentOfCollision.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EditorLabel.cs" />
     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
     <Compile Include="Assets\shadowComponent.cs" />
