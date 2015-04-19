@@ -173,10 +173,20 @@ public class PlayerController : MonoBehaviour {
         switch (_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
-                val= Input.GetAxis("Player1_axisMove");
+                if (Input.GetKey(KeyCode.W))
+                    val = -1;
+                else if (Input.GetKey(KeyCode.S))
+                    val = 1;
+                else
+                 val= Input.GetAxis("Player1_axisMove");
                 break;
             case PlayerNum.PLAYER_TWO:
-                val= Input.GetAxis("Player2_axisMove");
+                if (Input.GetKey(KeyCode.UpArrow))
+                    val = -1;
+                else if (Input.GetKey(KeyCode.DownArrow))
+                    val = 1;
+                else
+                    val= Input.GetAxis("Player2_axisMove");
                 break;
             case PlayerNum.PLAYER_THREE:
                 val= Input.GetAxis("Player3_axisMove");
@@ -196,10 +206,20 @@ public class PlayerController : MonoBehaviour {
         switch(_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
-                val= Input.GetAxis("Player1_axisX");
+                if (Input.GetKey(KeyCode.D))
+                    val = 1;
+                else if (Input.GetKey(KeyCode.A))
+                    val = -1;
+                else
+                    val= Input.GetAxis("Player1_axisX");
                 break;
             case PlayerNum.PLAYER_TWO:
-                val = Input.GetAxis("Player2_axisX");
+                if (Input.GetKey(KeyCode.RightArrow))
+                    val = 1;
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                    val = -1;
+                else
+                    val = Input.GetAxis("Player2_axisX");
                 break;
             case PlayerNum.PLAYER_THREE:
                 val = Input.GetAxis("Player3_axisX");
