@@ -88,8 +88,8 @@ public class Arena : MonoBehaviour {
         _allPickups.Clear();
         for (int i = 0; i < _baguetteSpawners.Count; i++)
         {
-            Baguette b = ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();
-            _allPickups.Add(b);
+             ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();
+  
         }
 
         _mainCam.setPlayers(_allPlayers);

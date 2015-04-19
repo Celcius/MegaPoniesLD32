@@ -129,6 +129,7 @@ public class PlayerController : MonoBehaviour {
         else
         {
             float rotateMult = (ROTATE_SPEED - STILL_ROTATE_SPEED)  * (1- Mathf.Abs(_velocity) / MAX_SPEED) + STILL_ROTATE_SPEED;
+            //rotateRigidBodyAroundPointBy(rigidbody,_back.position)
             transform.Rotate(new Vector3(0, x * rotateMult*Time.deltaTime, 0));
 
         }
