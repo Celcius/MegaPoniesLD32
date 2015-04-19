@@ -35,7 +35,7 @@ public class BaguetteSpawner : MonoBehaviour {
 
         _baguette.transform.position = transform.position;
         _baguette.transform.rotation = transform.localRotation;
-        _baguette.transform.active = true;
+        _baguette.gameObject.SetActive(true);
     }
 
     public void destroyBaguette(bool respawn)
@@ -43,7 +43,7 @@ public class BaguetteSpawner : MonoBehaviour {
         if (_baguette == null)
             return;
 
-        _baguette.transform.active = false;
+        _baguette.gameObject.SetActive(false);
         _baguette.transform.position = transform.position;
         _baguette.transform.rotation = transform.localRotation;
 
