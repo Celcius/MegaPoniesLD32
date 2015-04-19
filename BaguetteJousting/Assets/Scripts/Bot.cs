@@ -46,8 +46,9 @@ public class Bot : MonoBehaviour {
 
 
 	float evaluateDistanceToObject(GameObject theObject){
+		float distance = Vector3.Distance (theObject.transform.position,transform.position);
 		//TODO>
-		return Vector3.Distance (theObject.transform.position,transform.position);
+		return distance;
 	}
 
 	GameObject pickBaguette(){
