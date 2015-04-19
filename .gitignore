@@ -19,3 +19,7 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+*.blend1
+*.blend1.meta
+*.blend2
+*.blend2.meta

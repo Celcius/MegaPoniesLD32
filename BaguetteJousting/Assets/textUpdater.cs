@@ -6,12 +6,13 @@ public class textUpdater : MonoBehaviour {
     [SerializeField]
     Slider _slider;
 
-    public void updateString()
+    public void updateString(string str)
     {
         if (_slider != null)
-         this.GetComponent<Text>().text = _slider.value + " Players";
+            this.GetComponent<Text>().text = _slider.value + str;
         
     }
+
 	// Use this for initialization
 	void Start () {
 	

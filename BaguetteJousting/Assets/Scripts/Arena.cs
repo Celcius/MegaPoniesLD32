@@ -8,6 +8,11 @@ public class Arena : MonoBehaviour {
 	
 	private static Arena _instance;
 
+    public int _rounds;
+    public int _currentRound;
+
+    public int[] _scores = {0,0,0,0};
+
     [SerializeField]
     List<Transform> _spawners;
 
@@ -40,6 +45,9 @@ public class Arena : MonoBehaviour {
         else return;
 
         int players = ServiceLocator.instance.getPlayers();
+        _rounds = ServiceLocator.instance.getRounds();
+        _currentRound = 0;
+
 
         
         for(int i = 0; i <players; i++)

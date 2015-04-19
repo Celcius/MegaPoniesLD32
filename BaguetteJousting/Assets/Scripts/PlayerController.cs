@@ -160,10 +160,12 @@ public class PlayerController : MonoBehaviour {
         _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
         scaleVal = 1/scaleVal*0.5f;
         _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
-
+        if (dirVector.y > _baseY)
+            dirVector.y = _baseY;
         if(transform.position.y - _baseY < 2.8f)
             rigidbody.MovePosition(transform.position + dirVector);
-        
+
+
 	
 	}
 
