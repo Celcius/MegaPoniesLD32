@@ -32,7 +32,15 @@ public class Baguette : Pickup {
     {
         if (gameObject.transform.position.y < KILL_Z && _spawner != null)
         {
+            Pickup pickup = (Pickup)GetComponent<Pickup>();
+        
+            
+            if(pickup.carrier != null)
+                pickup.carrier.destroyedPickUp();
+            pickup.carrier = null;
             _spawner.destroyBaguette(true);
+            
+            
         }
     }
 

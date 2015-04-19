@@ -34,8 +34,12 @@ public class BaguetteSpawner : MonoBehaviour {
     public Baguette spawnBaguette()
     {
         if (_baguette == null)
+        {
             _baguette = (Baguette)((GameObject)Instantiate(Resources.Load("Prefabs/Baguette"))).GetComponent<Baguette>();
+            _baguette.registerSpawner(this);
+        }
 
+        
         _baguette.gameObject.SetActive(true);
         _baguette.transform.position = transform.position;
         _baguette.transform.rotation = transform.rotation;
@@ -52,7 +56,7 @@ public class BaguetteSpawner : MonoBehaviour {
 
         if (_baguette == null)
             return;
-
+        Arena.instance.allPickups.Remove(_baguette.GetComponent<Pickup>());
         _baguette.gameObject.SetActive(false);
         _baguette.transform.position = transform.position;
         _baguette.transform.rotation = transform.rotation;
