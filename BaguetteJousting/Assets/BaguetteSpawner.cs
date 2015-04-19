@@ -5,8 +5,6 @@ public class BaguetteSpawner : MonoBehaviour {
 
     Baguette _baguette;
     float _spawnTimer = 0;
-    
-
 
 	// Use this for initialization
 	void Start () {
@@ -33,14 +31,18 @@ public class BaguetteSpawner : MonoBehaviour {
 
     public Baguette spawnBaguette()
     {
-        if (_baguette == null)
+        if (_baguette != null)
         {
-            _baguette = (Baguette)((GameObject)Instantiate(Resources.Load("Prefabs/Baguette"))).GetComponent<Baguette>();
-            _baguette.registerSpawner(this);
+            Destroy(_baguette);
         }
 
-        
+        _baguette = (Baguette)((GameObject)Instantiate(Resources.Load("Prefabs/Baguette"))).GetComponent<Baguette>();
+        _baguette.registerSpawner(this);
+
+        Arena.instance.allPickups.Add(_baguette);
+
         _baguette.gameObject.SetActive(true);
+        
         _baguette.transform.position = transform.position;
         _baguette.transform.rotation = transform.rotation;
         

@@ -20,11 +20,16 @@ public class Pawn : MonoBehaviour {
 	}
 	
 	public void Kill(){
-		
+
+
+        Pickup pick = GetComponent<Carrier>().pickup;
+        if(pick != null)
+            pick.GetComponent<Baguette>().destroyBaguette();
 		this.alive = false;
 		Arena.instance.PlayerDied(this);
         transform.active = false;
         Destroy(gameObject,1.0f);
+        
 	}
 	
 	
