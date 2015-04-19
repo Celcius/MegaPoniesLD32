@@ -28,14 +28,16 @@ public class BaguetteSpawner : MonoBehaviour {
 	
 	}
 
-    public void spawnBaguette()
+    public Baguette spawnBaguette()
     {
         if (_baguette == null)
-            return;
+            return null;
 
         _baguette.transform.position = transform.position;
         _baguette.transform.rotation = transform.localRotation;
         _baguette.gameObject.SetActive(true);
+
+        return _baguette;
     }
 
     public void destroyBaguette(bool respawn)
