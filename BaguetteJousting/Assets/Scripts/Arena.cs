@@ -12,6 +12,7 @@ public class Arena : MonoBehaviour {
     public int _currentRound;
 
     public int[] _scores = {0,0,0,0};
+    bool _playing = false;
 
     [SerializeField]
     List<Transform> _spawners;
@@ -52,7 +53,6 @@ public class Arena : MonoBehaviour {
         _rounds = ServiceLocator.instance.getRounds();
         _currentRound = 0;
 
-
         spawnRound();
 
 	}
@@ -60,6 +60,12 @@ public class Arena : MonoBehaviour {
 
     void spawnRound()
     {
+        for (int i = 0; i < _allPlayers.Count; i++)
+        {
+            Pawn pawn = _allPlayers[i];
+            pawn.Kill();
+        }
+        _allPlayers.Clear();
 
         int players = ServiceLocator.instance.getPlayers();
         for (int i = 0; i < players; i++)
@@ -79,12 +85,15 @@ public class Arena : MonoBehaviour {
             }
         }
 
+        _allPickups.Clear();
         for (int i = 0; i < _baguetteSpawners.Count; i++)
         {
-            ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();
+            Baguette b = ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();
+            _allPickups.Add(b);
         }
 
         _mainCam.setPlayers(_allPlayers);
+        _playing = true;
     }
 
 	// Use this for initialiList<Pickup> allPickups = new List<Pickup>();zation
@@ -95,6 +104,12 @@ public class Arena : MonoBehaviour {
 	
 	
 	public void PlayerDied(Pawn player){
+        _allPlayers.Remove(player);
+        _mainCam.setPlayers(_allPlayers);
+
+        if (!_playing)
+            return;
+
 		int playersAlive = 0;
 		foreach (Pawn p in allPlayers){
 			if(p.isAlive()){
@@ -105,13 +120,32 @@ public class Arena : MonoBehaviour {
 		}
 		if (playersAlive < 2){
 			Debug.Log("Only one player left.");
-			MatchOver();
+			RoundOver();
 		}
+
+        
+
 	}
 	
 	
+    void RoundOver()
+    {
+        _rounds++;
+        if(_rounds > ServiceLocator.instance.getRounds())
+        {
+            Debug.Log("End Round");
+            MatchOver();
+            _playing = false;
+        }
+        else
+        {
+            Debug.Log("Restarting");
+            _playing = false;
+            spawnRound();
+        }
+    }
 	void MatchOver(){
-		LevelGUI.instance.ShowEndGUI();
+//		LevelGUI.instance.ShowEndGUI();
 	}
 	
 	

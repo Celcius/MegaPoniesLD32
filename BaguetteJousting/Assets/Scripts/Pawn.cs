@@ -6,7 +6,7 @@ public class Pawn : MonoBehaviour {
     Baguette baguette;
 	bool alive = true;
 	
-	float killZ = -50.0f;
+	float killZ = -20.0f;
 
     void Start()
     {
@@ -20,10 +20,11 @@ public class Pawn : MonoBehaviour {
 	}
 	
 	public void Kill(){
-		Debug.Log(this + " died");
+		
 		this.alive = false;
 		Arena.instance.PlayerDied(this);
-		
+        transform.active = false;
+        Destroy(gameObject,1.0f);
 	}
 	
 	

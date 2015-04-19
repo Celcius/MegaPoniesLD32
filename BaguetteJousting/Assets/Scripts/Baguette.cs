@@ -16,7 +16,7 @@ public class Baguette : Pickup {
     BaguetteSpawner _spawner;
 
 
-    const float KILL_Z = -50.0f;
+    const float KILL_Z = -20.0f;
 
 	// Use this for initialization
 	
