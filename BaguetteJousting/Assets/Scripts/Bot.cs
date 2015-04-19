@@ -87,9 +87,8 @@ public class Bot : MonoBehaviour {
 		movementTarget = NO_TARGET;
 		if(!isBot) return;
 		if (pawn.baguette == null && arena.allPickups.Count > 0) {
-			if(target == null || target.GetComponent<Baguette>() == null ){
+			//if(target == null || target.GetComponent<Baguette>() == null ){
 				target = pickBaguette();
-			}
 			movementTarget = (target != null)? target.transform.position : NO_TARGET;
 		}
 		else {
@@ -121,27 +120,30 @@ public class Bot : MonoBehaviour {
 		float distanceToSpot = Vector3.Distance(spot,transform.position);
 		Vector3 directionToSpot = (spot - transform.position).normalized;
 		Vector3 facingDirection = movementController.FacingDirection ();
-		Vector3 projection = Vector3.Project (directionToSpot,facingDirection);
-		Vector3 side = directionToSpot - projection;
+		//Vector3 projection = Vector3.Project (directionToSpot,facingDirection);
+		//Vector3 side = directionToSpot - projection;
 		float dot = Vector3.Dot (directionToSpot, facingDirection);
+		Vector3 horizontal = Vector3.Cross (facingDirection, Vector3.up);
+		float dotHorizontal = Vector3.Dot (directionToSpot, horizontal);
 		Debug.Log ("Dot > " + dot);
-		Debug.Log ("DirectionToSpot " + directionToSpot);
-		Debug.Log ("Facing Direction " + facingDirection);
-		Debug.Log ("Projection > " + projection);
-		Debug.Log ("Side > " + side);
+		Debug.Log ("Dot horizontal > " + dotHorizontal);
+		//Debug.Log ("DirectionToSpot " + directionToSpot);
+		//Debug.Log ("Facing Direction " + facingDirection);
+		//Debug.Log ("Projection > " + projection);
+		//Debug.Log ("Side > " + side);
 		Debug.Log ("distanceToSpot " + distanceToSpot);
 		Debug.Log ("velocity " + movementController.velocity);
 		
-		if (projection.x > 0.1f && distanceToSpot > movementController.velocity) {
+		if (dot > 0.1f && distanceToSpot > movementController.velocity * 5) {
 			_movementInput = -1.0f;
 		}
 		if ( movementController.velocity > distanceToSpot) {
 			_movementInput = 1.0f;
 		}
-		if (side.z > 0.15f) {
+		if (dotHorizontal > 0.15f) {
 			_rotationInput = -1.0f;
 		}
-		if (side.z < -0.15f) {
+		if (dotHorizontal < -0.15f) {
 			_rotationInput = 1.0f;
 		}
 		
