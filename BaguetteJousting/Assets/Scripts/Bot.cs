@@ -126,14 +126,14 @@ public class Bot : MonoBehaviour {
 		float dot = Vector3.Dot (directionToSpot, facingDirection);
 		Vector3 horizontal = Vector3.Cross (facingDirection, Vector3.up);
 		float dotHorizontal = Vector3.Dot (directionToSpot, horizontal);
-		Debug.Log ("Dot > " + dot);
-		Debug.Log ("Dot horizontal > " + dotHorizontal);
+		//Debug.Log ("Dot > " + dot);
+		//Debug.Log ("Dot horizontal > " + dotHorizontal);
 		//Debug.Log ("DirectionToSpot " + directionToSpot);
 		//Debug.Log ("Facing Direction " + facingDirection);
 		//Debug.Log ("Projection > " + projection);
 		//Debug.Log ("Side > " + side);
-		Debug.Log ("distanceToSpot " + distanceToSpot);
-		Debug.Log ("velocity " + movementController.velocity);
+		//Debug.Log ("distanceToSpot " + distanceToSpot);
+		//Debug.Log ("velocity " + movementController.velocity);
 		
 		if (dot > 0.1f && distanceToSpot > movementController.velocity * 5) {
 			_movementInput = -1.0f;

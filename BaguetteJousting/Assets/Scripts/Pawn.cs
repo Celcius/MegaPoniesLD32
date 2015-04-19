@@ -27,7 +27,7 @@ public class Pawn : MonoBehaviour {
             pick.GetComponent<Baguette>().destroyBaguette();
 		this.alive = false;
 		Arena.instance.PlayerDied(this);
-        transform.active = false;
+        transform.gameObject.SetActive(false);
         Destroy(gameObject,1.0f);
         
 	}
