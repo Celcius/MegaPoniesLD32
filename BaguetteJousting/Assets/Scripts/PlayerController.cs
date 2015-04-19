@@ -74,6 +74,22 @@ public class PlayerController : MonoBehaviour {
         }
 	}
 
+    public int getPlayerIndex()
+    {
+        switch(_playerNum)
+        {
+            case PlayerNum.PLAYER_ONE:
+                return 0;
+            case PlayerNum.PLAYER_TWO:
+                return 1;
+            case PlayerNum.PLAYER_THREE:
+                return 2;
+            case PlayerNum.PLAYER_FOUR:
+                return 3;
+        }
+        return -1;
+    }
+
     public void setPlayerNum(int i)
     {
         if (i == 0)

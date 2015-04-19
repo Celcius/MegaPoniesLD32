@@ -10,7 +10,6 @@ public class BaguetteSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _baguette = (Baguette)((GameObject)Instantiate(Resources.Load("Prefabs/Baguette"))).GetComponent<Baguette>();
 
 	}
 	
@@ -18,12 +17,16 @@ public class BaguetteSpawner : MonoBehaviour {
 	void Update () {
 
         if (_spawnTimer > 0)
-            _spawnTimer -= Time.deltaTime;
-        if(_spawnTimer <= 0)
         {
-            _spawnTimer = 0;
-            spawnBaguette();
+            _spawnTimer -= Time.deltaTime;
+            if (_spawnTimer <= 0)
+            {
+                _spawnTimer = 0;
+                spawnBaguette();
+            }
+
         }
+
 
 	
 	}
@@ -31,25 +34,28 @@ public class BaguetteSpawner : MonoBehaviour {
     public Baguette spawnBaguette()
     {
         if (_baguette == null)
-            return null;
+            _baguette = (Baguette)((GameObject)Instantiate(Resources.Load("Prefabs/Baguette"))).GetComponent<Baguette>();
 
-        _baguette.transform.position = transform.position;
-        _baguette.transform.rotation = transform.localRotation;
         _baguette.transform.active = true;
+        _baguette.transform.position = transform.position;
+        _baguette.transform.rotation = transform.rotation;
+        
 
         return _baguette;
     }
 
     public void destroyBaguette(bool respawn)
     {
+
+        if (respawn)
+            _spawnTimer = 5.0f;
+
         if (_baguette == null)
             return;
 
         _baguette.transform.active = false;
         _baguette.transform.position = transform.position;
-        _baguette.transform.rotation = transform.localRotation;
+        _baguette.transform.rotation = transform.rotation;
 
-        if (respawn)
-            _spawnTimer = 5.0f;
     }
 }

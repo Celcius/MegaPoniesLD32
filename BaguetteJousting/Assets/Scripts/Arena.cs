@@ -8,8 +8,8 @@ public class Arena : MonoBehaviour {
 	
 	private static Arena _instance;
 
-    public int _rounds;
-    public int _currentRound;
+    public int _rounds = 3;
+    public int _currentRound = 1;
 
     public int[] _scores = {0,0,0,0};
     bool _playing = false;
@@ -67,7 +67,7 @@ public class Arena : MonoBehaviour {
         }
         _allPlayers.Clear();
 
-        int players = ServiceLocator.instance.getPlayers();
+        int players = 4;// ServiceLocator.instance.getPlayers();
         for (int i = 0; i < players; i++)
         {
             if (i < _spawners.Count)
@@ -120,6 +120,7 @@ public class Arena : MonoBehaviour {
 		}
 		if (playersAlive < 2){
 			Debug.Log("Only one player left.");
+            _scores[_allPlayers[0].GetComponent<PlayerController>().getPlayerIndex()]++;
 			RoundOver();
 		}
 
@@ -130,22 +131,26 @@ public class Arena : MonoBehaviour {
 	
     void RoundOver()
     {
-        _rounds++;
-        if(_rounds > ServiceLocator.instance.getRounds())
+            
+        _currentRound++;
+        
+        if(_currentRound > _rounds)
         {
-            Debug.Log("End Round");
+            Debug.Log("End MAtch");
             MatchOver();
             _playing = false;
         }
         else
         {
-            Debug.Log("Restarting");
+            Debug.Log("End Round");
             _playing = false;
             spawnRound();
         }
     }
 	void MatchOver(){
-//		LevelGUI.instance.ShowEndGUI();
+        //		LevelGUI.instance.ShowEndGUI();
+        Application.LoadLevel("MainMenu");
+
 	}
 	
 	
