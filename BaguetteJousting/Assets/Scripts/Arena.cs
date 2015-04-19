@@ -89,6 +89,11 @@ public class Arena : MonoBehaviour {
             }
         }
 
+        for (int i = 0; i < _allPickups.Count; i++)
+        {
+            Pickup pickup = _allPickups[i];
+            pickup.GetComponent<Baguette>().destroyBaguette();
+        }
         _allPickups.Clear();
         for (int i = 0; i < _baguetteSpawners.Count; i++)
         {
