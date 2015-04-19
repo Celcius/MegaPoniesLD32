@@ -20,13 +20,13 @@ public class PlayerController : MonoBehaviour {
     const float ROTATE_SPEED = 200.0f;
     const float STILL_ROTATE_SPEED = 110.5f;
     const float MAX_SPEED_ROTATE_MOD = ROTATE_SPEED - STILL_ROTATE_SPEED;
-    const float MAX_SPEED = 12.0f;
+    const float MAX_SPEED = 20.0f;
     const float MAX_STILL_SPEED = 5.0f;
     const float MAX_BACK_SPEED = -10.0f;
     const float ACCEL_DECREASE = 1000.0f;
     const float MAX_SCALE = 3.0f;
     const float MIN_SCALE = 1.0f;
-    const float SCALE_VAL = 1.5f;
+    const float SCALE_VAL = 1.2f;
     [SerializeField]
     PlayerNum _playerNum;
 
