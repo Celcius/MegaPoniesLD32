@@ -50,6 +50,7 @@ public class Carrier : MonoBehaviour {
     protected virtual void FixedUpdate()
     {
 		if(!this.IsCarrying()){
+            Debug.Log(Arena.instance.allPickups.Count);
 			foreach (Pickup aPickup in Arena.instance.allPickups ){
 				float distanceToPickup = Vector3.Distance(aPickup.gameObject.transform.position, this.gameObject.transform.position);
 				if (distanceToPickup <= this.grabRange && this.TryToPickup(aPickup)) {
@@ -61,6 +62,8 @@ public class Carrier : MonoBehaviour {
 
     public void throwPickup()
     {
+        if (pickup == null)
+            return;
         Debug.Log("throwpickup");
         pickup.throwPickup();
         pickup = null;

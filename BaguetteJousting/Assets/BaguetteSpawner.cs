@@ -36,7 +36,7 @@ public class BaguetteSpawner : MonoBehaviour {
         if (_baguette == null)
             _baguette = (Baguette)((GameObject)Instantiate(Resources.Load("Prefabs/Baguette"))).GetComponent<Baguette>();
 
-        _baguette.transform.active = true;
+        _baguette.transform.SetActive(true);
         _baguette.transform.position = transform.position;
         _baguette.transform.rotation = transform.rotation;
         
@@ -53,7 +53,7 @@ public class BaguetteSpawner : MonoBehaviour {
         if (_baguette == null)
             return;
 
-        _baguette.transform.active = false;
+        _baguette.gameObject.SetActive(false);
         _baguette.transform.position = transform.position;
         _baguette.transform.rotation = transform.rotation;
 

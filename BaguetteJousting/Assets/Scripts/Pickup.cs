@@ -45,11 +45,11 @@ public class Pickup : MonoBehaviour {
 //		
 		carrier = someCarrier;
   
-		Debug.Log(this + " was picked up by " + someCarrier);
+		Debug.Log(this.name  + " was picked up by " + someCarrier);
         
-        transform.SetParent(carrier.pickupSocket);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.Euler(new Vector3(90,90,0));
+        gameObject.transform.SetParent(carrier.pickupSocket);
+        gameObject.transform.localPosition = Vector3.zero;
+        gameObject.transform.localRotation = Quaternion.Euler(new Vector3(90, 90, 0));
 
 		
 //		rigidbody.detectCollisions = false;
