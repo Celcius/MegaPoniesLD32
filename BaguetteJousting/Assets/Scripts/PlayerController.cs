@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        checkForActionButtonPressed();
         if (_front == null || _back == null)
             return;
 
@@ -231,6 +231,20 @@ public class PlayerController : MonoBehaviour {
         if (Mathf.Abs(val) < 0.8f)
             val = 0.0f;
         return val;
+    }
+
+    void checkForActionButtonPressed()
+    {
+        switch (_playerNum)
+        {
+            case PlayerNum.PLAYER_TWO:
+
+                if(Input.GetButtonDown("Fire1"))
+                    GetComponent<Pawn>().useAction();
+                break;
+            default:
+                break;
+        }
     }
 
     public void rotateRigidBodyAroundPointBy(Rigidbody rb, Vector3 origin, Vector3 axis, float angle)

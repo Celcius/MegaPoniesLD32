@@ -59,6 +59,13 @@ public class Carrier : MonoBehaviour {
 		}
 	}
 
+    public void throwPickup()
+    {
+        Debug.Log("throwpickup");
+        pickup.throwPickup();
+        pickup = null;
+    }
+
     void defaultPickUpCallback(Pickup pickup)
     {
 
