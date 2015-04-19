@@ -129,8 +129,8 @@ public class PlayerController : MonoBehaviour {
         else
         {
             float rotateMult = (ROTATE_SPEED - STILL_ROTATE_SPEED)  * (1- Mathf.Abs(_velocity) / MAX_SPEED) + STILL_ROTATE_SPEED;
-            //rotateRigidBodyAroundPointBy(rigidbody,_back.position)
-            transform.Rotate(new Vector3(0, x * rotateMult*Time.deltaTime, 0));
+            rotateRigidBodyAroundPointBy(rigidbody, _back.position, Vector3.up, x * rotateMult * Time.deltaTime);
+            //transform.Rotate(new Vector3(0, x * rotateMult*Time.deltaTime, 0));
 
         }
 
@@ -191,9 +191,9 @@ public class PlayerController : MonoBehaviour {
 
         _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
         scaleVal = 1/scaleVal*0.5f;
-        _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
-        if (dirVector.y > _baseY)
-            dirVector.y = _baseY;
+   //     _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+     //   if (dirVector.y > _baseY)
+       //     dirVector.y = _baseY;
 
 
 
