@@ -11,6 +11,10 @@ public class Pickup : MonoBehaviour {
 
     public delegate void pickedPickup(Pickup pickup);
 
+    protected const float SECONDS_BEFORE_BAGUETTE_IS_PICKABLE_AFTER_THROW = 4;
+
+    protected Carrier thrower = null;
+
     protected PickupTypes pickUpType = PickupTypes.PickupNone;
 
     public PickupTypes PickUpType
@@ -21,8 +25,10 @@ public class Pickup : MonoBehaviour {
         }
     }
 	public Carrier carrier;
+    protected bool isAvaiableForPickup = true;
+
 	public bool PickedUp (Carrier someCarrier) {
-		if(carrier != null)
+        if (carrier != null || !isAvaiableForPickup)
 			return false;
 		
 		if (someCarrier == null || someCarrier.pickupSocket == null){
@@ -31,6 +37,11 @@ public class Pickup : MonoBehaviour {
 //		if(someCarrier.IsCarrying() ){
 //			return false; // or maybe make the
 //		}
+
+        Rigidbody rBody = GetComponent<Rigidbody>();
+
+        if (rBody)
+            Destroy(rBody);
 //		
 		carrier = someCarrier;
   
@@ -45,10 +56,43 @@ public class Pickup : MonoBehaviour {
 		
 		return true;
 	}
+
+    public virtual void throwPickup()
+    {
+        StartCoroutine("pickupThrowCoroutine");
+    }
+
+    public void pickupThrow()
+    {
+        
+
+    }
+
+    private IEnumerator pickupThrowCoroutine()
+    {
+        thrower = carrier;
+        isAvaiableForPickup = false;
+        dropped();
+        Vector3 throwDir = carrier.transform.right;
+        carrier = null;
+        Rigidbody rigBody = gameObject.GetComponent<Rigidbody>();
+        if (!rigidbody)
+            rigBody = gameObject.AddComponent<Rigidbody>();
+
+        rigBody.AddForce(throwDir * 100, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(SECONDS_BEFORE_BAGUETTE_IS_PICKABLE_AFTER_THROW);
+
+        isAvaiableForPickup = true;
+        thrower = null;
+
+  
+    }
+
 	
 	
-	public void dropped () {
-		carrier = null;
+	public virtual void dropped () {
+        transform.SetParent(null);
 	}
 
     public bool isPickedUp()

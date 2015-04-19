@@ -3,8 +3,15 @@ using System.Collections;
 
 public class Baguette : Pickup {
 
-    public GameObject lateralColliderObject;
-    public GameObject frontCollisionObject;
+
+    private BaguetteMode baguetteMode;
+    private Vector3 throwDirection = Vector3.zero;
+
+    enum BaguetteMode
+    {
+        NormalMode,
+        EmpoweredMode,
+    }
 
     BaguetteSpawner _spawner;
 
@@ -17,6 +24,7 @@ public class Baguette : Pickup {
     {
 
         pickUpType = PickupTypes.PickupBaguette;
+        baguetteMode = BaguetteMode.NormalMode;
     }
 
 
@@ -31,37 +39,24 @@ public class Baguette : Pickup {
 
     public void OnCollisionEnter(Collision collision)
     {
-        Baguette baguette = collision.gameObject.GetComponent<Baguette>();
         Pawn player = collision.gameObject.GetComponent<Pawn>();
-        if (baguette)
-            checkForBaguetteDisarm(collision, baguette);
-        else if (player)
-            checkForKill(player);
-    }
-
-    public void checkForBaguetteDisarm(Collision collision, Baguette baguette)
-    {
-        ContactPoint[] contactPoints = collision.contacts;
-
-        foreach(ContactPoint c in contactPoints)
-        {
-            if (c.thisCollider.gameObject == lateralColliderObject)
-            {
-                disarmOpponentBaguette(baguette);
-                break;
-            }
-        }
+        if (player)
+            resolveCollisionWithPawn(collision, player);
     }
 
     public void resolveCollisionWithPawn(Collision collision, Pawn pawn)
     {
+        if (thrower != null && pawn.gameObject == thrower.gameObject)
+            return;
+
+        if (carrier != null && pawn.gameObject == carrier.gameObject)
+            return;
 
         foreach (ContactPoint c in collision.contacts)
         {
             string thisColTag = c.thisCollider.tag;
             string otherColTag = c.otherCollider.tag;
-            if ((thisColTag.Equals("FrontOfWeapon") || thisColTag.Equals("SideOfWeapon")) &&
-                otherColTag.Equals("Player"))
+            if (thisColTag.Equals("Weapon")  &&  otherColTag.Equals("Player"))
             {
                 baguetteSugoiPush(pawn);
                 break;
@@ -69,18 +64,44 @@ public class Baguette : Pickup {
         }
     }
 
-
-    private void disarmOpponentBaguette(Baguette baguette)
+    public override void throwPickup()
     {
-        baguette.gameObject.AddComponent<Rigidbody>();
-        baguette.transform.SetParent(null);
-        baguette.rigidbody.AddForce(new Vector3(0, 10f, 0), ForceMode.Impulse);
-        baguette.GetComponent<Pickup>().dropped();
+        StartCoroutine("throwBaguetteCoroutine");
+
     }
+
+    private IEnumerator throwBaguetteCoroutine()
+    {
+        thrower = carrier;
+        isAvaiableForPickup = false;
+        baguetteMode = BaguetteMode.EmpoweredMode;
+        dropped();
+        throwDirection = carrier.transform.right;
+        carrier = null;
+        Rigidbody rigBody = gameObject.GetComponent<Rigidbody>();
+        if (!rigidbody)
+            rigBody = gameObject.AddComponent<Rigidbody>();
+
+        rigBody.AddForce(throwDirection * 100, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(SECONDS_BEFORE_BAGUETTE_IS_PICKABLE_AFTER_THROW);
+
+        isAvaiableForPickup = true;
+        thrower = null;
+        baguetteMode = BaguetteMode.NormalMode;
+    }
+
 
     void baguetteSugoiPush(Pawn pawn)
     {
-        pawn.GetComponent<Rigidbody>().AddForce(carrier.transform.right * 50, ForceMode.Impulse);
+        Debug.Log("SUGOU PUSSSSHSHS");
+        Vector3 forceDir = carrier != null ? carrier.transform.right : throwDirection;
+        float pushStr = 50.0f;
+
+        if (baguetteMode == BaguetteMode.EmpoweredMode)
+            pushStr = 1000f;
+
+        pawn.GetComponent<Rigidbody>().AddForce(forceDir * pushStr, ForceMode.Impulse);
     }
 
     public void registerSpawner(BaguetteSpawner spawner)
@@ -88,6 +109,11 @@ public class Baguette : Pickup {
         _spawner = spawner;
     }
 
+    public override void dropped()
+    {
+        baguetteMode = BaguetteMode.NormalMode;
+        base.dropped();
+    }
 
 
     void checkForKill(Pawn pawn)

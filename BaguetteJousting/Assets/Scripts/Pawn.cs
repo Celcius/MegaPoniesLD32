@@ -44,12 +44,13 @@ public class Pawn : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         Pawn pawn = collision.gameObject.GetComponent<Pawn>();
-        Debug.Log(collision.collider.name);
-        Debug.Log(collision.gameObject.name);
         if (pawn && baguette)
             baguette.resolveCollisionWithPawn(collision, pawn);
+    }
 
-
+    public void useAction()
+    {
+        GetComponent<Carrier>().throwPickup();
     }
 
 }
