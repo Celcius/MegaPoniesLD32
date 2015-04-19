@@ -19,7 +19,7 @@ public class Pawn : MonoBehaviour {
 		return alive;
 	}
 	
-	void Kill(){
+	public void Kill(){
 		Debug.Log(this + " died");
 		this.alive = false;
 		Arena.instance.PlayerDied(this);

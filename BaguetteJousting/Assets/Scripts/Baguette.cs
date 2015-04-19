@@ -48,7 +48,7 @@ public class Baguette : Pickup {
             if ((thisColTag.Equals("FrontOfWeapon") || thisColTag.Equals("SideOfWeapon")) &&
                 otherColTag.Equals("Player"))
             {
-                checkForKill(pawn);
+                baguetteSugoiPush(pawn);
                 break;
             }
         }
@@ -63,24 +63,16 @@ public class Baguette : Pickup {
         baguette.GetComponent<Pickup>().dropped();
     }
 
-
-	
-    public void frontCollisionCallback(GameObject child, Collision collision)
+    void baguetteSugoiPush(Pawn pawn)
     {
-        Baguette baguette = collision.gameObject.GetComponent<Baguette>();
-        Pawn player = collision.gameObject.GetComponent<Pawn>();
-        if (baguette)
-        {
-            checkForBaguetteDisarm(collision, baguette);
-        }
-        else if (player)
-            checkForKill(player);
-
+        pawn.GetComponent<Rigidbody>().AddForce(carrier.transform.right * 50, ForceMode.Impulse);
     }
 
-    public void checkForKill(Pawn pawn)
-    {
 
+
+
+    void checkForKill(Pawn pawn)
+    {
         Arena.instance.PlayerDied(pawn);
         GameObject.Destroy(pawn.gameObject);
     }
