@@ -1,10 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pickup : MonoBehaviour {
-	public Carrier carrier;
+public enum PickupTypes {
+    PickupBaguette,
+    PickupNone
+}
 
-	
+
+public class Pickup : MonoBehaviour {
+
+    public delegate void pickedPickup(Pickup pickup);
+
+    protected PickupTypes pickUpType = PickupTypes.PickupNone;
+
+    public PickupTypes PickUpType
+    {
+        get
+        {
+            return pickUpType;
+        }
+    }
+	public Carrier carrier;
 	public bool PickedUp (Carrier someCarrier) {
 		if(carrier != null)
 			return false;
