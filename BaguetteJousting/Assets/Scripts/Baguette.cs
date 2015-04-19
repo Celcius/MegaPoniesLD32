@@ -101,7 +101,7 @@ public class Baguette : Pickup {
         if (baguetteMode == BaguetteMode.EmpoweredMode)
             pushStr = 1000f;
 
-        pawn.GetComponent<Rigidbody>().AddForce(forceDir * pushStr, ForceMode.Impulse);
+        pawn.GetComponent<PlayerController>().addPushForce(forceDir, pushStr);
     }
 
     public void registerSpawner(BaguetteSpawner spawner)
