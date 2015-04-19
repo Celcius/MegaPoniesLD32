@@ -8,8 +8,19 @@ public class Arena : MonoBehaviour {
 	
 	private static Arena _instance;
 
+    public int _rounds = 3;
+    public int _currentRound = 1;
+
+    public int[] _scores = {0,0,0,0};
+    bool _playing = false;
+
     [SerializeField]
     List<Transform> _spawners;
+    [SerializeField]
+    List<BaguetteSpawner> _baguetteSpawners;
+
+    [SerializeField]
+    MidPlayers _mainCam;
 
 	//This is the public reference that other classes will use
 	public static Arena instance {
@@ -39,12 +50,27 @@ public class Arena : MonoBehaviour {
 		if(arena != null) Debug.Log("Arena opened!");
         else return;
 
-        int players = ServiceLocator.instance.getPlayers();
+        _rounds = ServiceLocator.instance.getRounds();
+        _currentRound = 0;
 
-        
-        for(int i = 0; i <players; i++)
+        spawnRound();
+
+	}
+	
+
+    void spawnRound()
+    {
+        for (int i = 0; i < _allPlayers.Count; i++)
         {
-            if(i < _spawners.Count)
+            Pawn pawn = _allPlayers[i];
+            pawn.Kill();
+        }
+        _allPlayers.Clear();
+
+        int players = 4;// ServiceLocator.instance.getPlayers();
+        for (int i = 0; i < players; i++)
+        {
+            if (i < _spawners.Count)
             {
                 GameObject controller = (GameObject)Instantiate(Resources.Load("Prefabs/Player"));
 
@@ -54,12 +80,22 @@ public class Arena : MonoBehaviour {
                 controller.GetComponent<PlayerController>().setPlayerNum(i);
 
                 controller.name = "PLayer" + i;
+
+                _allPlayers.Add(controller.GetComponent<Pawn>());
             }
         }
 
+        _allPickups.Clear();
+        for (int i = 0; i < _baguetteSpawners.Count; i++)
+        {
+            Baguette b = ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();
+            _allPickups.Add(b);
+        }
 
-	}
-	
+        _mainCam.setPlayers(_allPlayers);
+        _playing = true;
+    }
+
 	// Use this for initialiList<Pickup> allPickups = new List<Pickup>();zation
 	void Start () {
 		_allPickups = new List<Pickup>(GameObject.FindObjectsOfType<Pickup>());
@@ -68,6 +104,12 @@ public class Arena : MonoBehaviour {
 	
 	
 	public void PlayerDied(Pawn player){
+        _allPlayers.Remove(player);
+        _mainCam.setPlayers(_allPlayers);
+
+        if (!_playing)
+            return;
+
 		int playersAlive = 0;
 		foreach (Pawn p in allPlayers){
 			if(p.isAlive()){
@@ -78,13 +120,37 @@ public class Arena : MonoBehaviour {
 		}
 		if (playersAlive < 2){
 			Debug.Log("Only one player left.");
-			MatchOver();
+            _scores[_allPlayers[0].GetComponent<PlayerController>().getPlayerIndex()]++;
+			RoundOver();
 		}
+
+        
+
 	}
 	
 	
+    void RoundOver()
+    {
+            
+        _currentRound++;
+        
+        if(_currentRound > _rounds)
+        {
+            Debug.Log("End MAtch");
+            MatchOver();
+            _playing = false;
+        }
+        else
+        {
+            Debug.Log("End Round");
+            _playing = false;
+            spawnRound();
+        }
+    }
 	void MatchOver(){
-		LevelGUI.instance.ShowEndGUI();
+        //		LevelGUI.instance.ShowEndGUI();
+        Application.LoadLevel("MainMenu");
+
 	}
 	
 	

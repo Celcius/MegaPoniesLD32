@@ -94,6 +94,22 @@ public class PlayerController : MonoBehaviour {
         }
 	}
 
+    public int getPlayerIndex()
+    {
+        switch(_playerNum)
+        {
+            case PlayerNum.PLAYER_ONE:
+                return 0;
+            case PlayerNum.PLAYER_TWO:
+                return 1;
+            case PlayerNum.PLAYER_THREE:
+                return 2;
+            case PlayerNum.PLAYER_FOUR:
+                return 3;
+        }
+        return -1;
+    }
+
     public void setPlayerNum(int i)
     {
         if (i == 0)
@@ -115,7 +131,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+        checkForActionButtonPressed();
         if (_front == null || _back == null)
             return;
 
@@ -186,10 +202,12 @@ public class PlayerController : MonoBehaviour {
         _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
         scaleVal = 1/scaleVal*0.5f;
         _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
-
+        if (dirVector.y > _baseY)
+            dirVector.y = _baseY;
         if(transform.position.y - _baseY < 2.8f)
             rigidbody.MovePosition(transform.position + dirVector);
-        
+
+
 	
 	}
 
@@ -263,6 +281,20 @@ public class PlayerController : MonoBehaviour {
         if (Mathf.Abs(val) < 0.8f)
             val = 0.0f;
         return val;
+    }
+
+    void checkForActionButtonPressed()
+    {
+        switch (_playerNum)
+        {
+            case PlayerNum.PLAYER_TWO:
+
+                if(Input.GetButtonDown("Fire1"))
+                    GetComponent<Pawn>().useAction();
+                break;
+            default:
+                break;
+        }
     }
 
     public void rotateRigidBodyAroundPointBy(Rigidbody rb, Vector3 origin, Vector3 axis, float angle)

@@ -11,14 +11,12 @@ public class WarnParentOfCollision : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("Fodase");
         if (_onTriggerEnterDelegate != null)
             _onTriggerEnterDelegate(gameObject, collider);
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Fodasesss");
         if (_onCollisionEnterDelegate != null)
             _onCollisionEnterDelegate(gameObject, collision);
 
@@ -26,7 +24,6 @@ public class WarnParentOfCollision : MonoBehaviour {
 
     void OnCollisionExit(Collision collision)
     {
-        Debug.Log("Sai");
         if (_onCollisionEnterDelegate != null)
             _onCollisionEnterDelegate(gameObject, collision);
 
@@ -34,7 +31,6 @@ public class WarnParentOfCollision : MonoBehaviour {
 
     void OnCollisionStay(Collision collision)
     {
-        Debug.Log("Fodasesss");
         if (_onCollisionEnterDelegate != null)
             _onCollisionEnterDelegate(gameObject, collision);
 
