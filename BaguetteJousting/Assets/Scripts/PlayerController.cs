@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
     const float MAX_SPEED = 12.0f;
     const float MAX_STILL_SPEED = 5.0f;
     const float MAX_BACK_SPEED = -5.0f;
-    const float ACCEL_DECREASE = 1000.0f;
+    const float ACCEL_DECREASE =800.0f;
     const float ACCEL_PUSH_DECREASE = 0.1f;
     const float MAX_SCALE = 3.0f;
     const float MIN_SCALE = 1.0f;
@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        checkForActionButtonPressed();
+         checkForActionButtonPressed();
         if (_front == null || _back == null)
             return;
 
