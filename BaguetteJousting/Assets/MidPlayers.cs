@@ -19,7 +19,7 @@ public class MidPlayers : MonoBehaviour {
         int activePlayers = 0;
 	    for(int i = 0; i < _players.Count; i++)
         {
-            if(_players[i].transform.active)
+            if(_players[i].gameObject.activeSelf)
             { 
              x += _players[i].transform.position.x;
              z += _players[i].transform.position.z;

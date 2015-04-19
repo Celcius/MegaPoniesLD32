@@ -78,21 +78,21 @@ public class PlayerController : MonoBehaviour {
         switch(_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
-                _trail.renderer.material = Resources.Load("Materials/Red") as Material;
+                _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Red") as Material;
                 _bikes[0].gameObject.SetActive(true);
                 break;
             case PlayerNum.PLAYER_TWO:
-                _trail.renderer.material = Resources.Load("Materials/Blue") as Material;
+                _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Blue") as Material;
                 _bikes[1].gameObject.SetActive(true);
 				GetComponent<Bot>().isBot = true;
 				_isBot = true;
                 break;
             case PlayerNum.PLAYER_THREE:
-                _trail.renderer.material = Resources.Load("Materials/Yellow") as Material;
+                _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Yellow") as Material;
                 _bikes[2].gameObject.SetActive(true);
                 break;
             case PlayerNum.PLAYER_FOUR:
-                _trail.renderer.material = Resources.Load("Materials/Purple") as Material;
+                _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Purple") as Material;
                 _bikes[3].gameObject.SetActive(true);
                 break;
         }
@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour {
 
         if (_isStill)
         {
-            rotateRigidBodyAroundPointBy(rigidbody, _back.position, new Vector3(0, 1, 0), x * ROTATE_SPEED * Time.deltaTime);
+            rotateRigidBodyAroundPointBy(GetComponent<Rigidbody>(), _back.position, new Vector3(0, 1, 0), x * ROTATE_SPEED * Time.deltaTime);
             //rigidBody.RotateAround(_back.position, new Vector3(0.0f, x, 0.0f), ROTATE_SPEED * Time.deltaTime);
             if(x != 0) 
                 _acceleration = ACCEL_ROTATE_MOD;
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour {
 
 
         if(transform.position.y - _baseY < 2.8f)
-            rigidbody.MovePosition(transform.position + dirVector);
+            GetComponent<Rigidbody>().MovePosition(transform.position + dirVector);
 
 
 	

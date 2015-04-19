@@ -79,7 +79,7 @@ public class Pickup : MonoBehaviour {
         Vector3 throwDir = carrier.transform.right;
         carrier = null;
         Rigidbody rigBody = gameObject.GetComponent<Rigidbody>();
-        if (!rigidbody)
+        if (!GetComponent<Rigidbody>())
             rigBody = gameObject.AddComponent<Rigidbody>();
 
         rigBody.AddForce(throwDir * 100, ForceMode.Impulse);
