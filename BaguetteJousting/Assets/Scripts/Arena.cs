@@ -10,9 +10,11 @@ public class Arena : MonoBehaviour {
 
     public int _rounds = 3;
     public int _currentRound = 1;
-
+    public bool roundStarted = false;
     public int[] _scores = {0,0,0,0};
     bool _playing = false;
+    [SerializeField]
+    RoundL roundController;
 
     [SerializeField]
     List<Transform> _spawners;
@@ -60,6 +62,8 @@ public class Arena : MonoBehaviour {
 
     void spawnRound()
     {
+        roundController.roundStart();
+        roundStarted = false;
         for (int i = 0; i < _allPlayers.Count; i++)
         {
             Pawn pawn = _allPlayers[i];
@@ -67,7 +71,7 @@ public class Arena : MonoBehaviour {
         }
         _allPlayers.Clear();
 
-        int players = 4;// ServiceLocator.instance.getPlayers();
+        int players = ServiceLocator.instance.getPlayers();
         for (int i = 0; i < players; i++)
         {
             if (i < _spawners.Count)
@@ -94,6 +98,11 @@ public class Arena : MonoBehaviour {
 
         _mainCam.setPlayers(_allPlayers);
         _playing = true;
+    }
+
+    public void startRound()
+    {
+        roundStarted = true;
     }
 
 	// Use this for initialiList<Pickup> allPickups = new List<Pickup>();zation
@@ -134,7 +143,7 @@ public class Arena : MonoBehaviour {
             
         _currentRound++;
         
-        if(_currentRound > _rounds)
+        if(_currentRound >= _rounds)
         {
             Debug.Log("End MAtch");
             MatchOver();
@@ -143,13 +152,16 @@ public class Arena : MonoBehaviour {
         else
         {
             Debug.Log("End Round");
+
             _playing = false;
             spawnRound();
+            
         }
     }
 	void MatchOver(){
-        //		LevelGUI.instance.ShowEndGUI();
-        Application.LoadLevel("MainMenu");
+
+   		LevelGUI.instance.ShowEndGUI();
+        //Application.LoadLevel("MainMenu");
 
 	}
 	

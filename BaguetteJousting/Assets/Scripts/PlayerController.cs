@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour {
 
     TrailRenderer _trail;
 
+    
     float _baseY = 0;
     bool _isStill = true;
     float _acceleration = 0.0f;
@@ -237,6 +238,9 @@ public class PlayerController : MonoBehaviour {
 
     float getMovement()
     {
+        if (!Arena.instance.roundStarted)
+            return 0;
+
         float val = 0;
 
 		if(_isBot){
@@ -275,6 +279,9 @@ public class PlayerController : MonoBehaviour {
     
     float getRotation()
     {
+        if (!Arena.instance.roundStarted)
+            return 0;
+
         float val = 0;
 		if(_isBot){
 			return gameObject.GetComponent<Bot>().rotationInput;
