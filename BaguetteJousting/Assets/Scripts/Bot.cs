@@ -17,6 +17,10 @@ public class Bot : MonoBehaviour {
 	float _movementInput = 0.0f;
 	float _rotationInput = 0.0f;
 
+	float topBorder = float.MaxValue;
+	float bottomBorder = - float.MaxValue;
+	float rightBorder = float.MaxValue;
+	float leftBorder = - float.MaxValue ;
 
 	public float movementInput {			
 		get {
@@ -42,12 +46,32 @@ public class Bot : MonoBehaviour {
 			return;
 		}
 		movementController = GetComponent<PlayerController> ();
+		GameObject topLeft = GameObject.Find ("TopLeft");
+		if (topLeft != null) {
+			topBorder = topLeft.transform.position.z;
+			leftBorder = topLeft.transform.position.x;
+		}
+		GameObject botRight = GameObject.Find ("BotRight");
+		if (botRight != null) {
+			bottomBorder = botRight.transform.position.z;
+			rightBorder = botRight.transform.position.x;
+		}
+
 	}
 
+	bool FrontIsClear(float maxDistance){
+		return Physics.Raycast (transform.position, movementController.FacingDirection (), maxDistance);
+	}
 
 	float evaluateDistanceToObject(GameObject theObject){
+		float checkDistance = 25.0f;
 		float distance = Vector3.Distance (theObject.transform.position,transform.position);
 		//TODO>
+		Debug.Log ("checking ray");
+		if (FrontIsClear(checkDistance)) {
+			Debug.Log("Object in the way");
+			distance += checkDistance;
+		}
 		return distance;
 	}
 
@@ -55,7 +79,7 @@ public class Bot : MonoBehaviour {
 		GameObject chosenBaguette = null;
 		List<Pickup> allBaguettes = arena.allPickups;
 		//Debug.Log ("allBaguettes" + allBaguettes);
-		float closestDistanceToBaguette = 9999999999f;
+		float closestDistanceToBaguette = float.MaxValue;
 		foreach(Pickup baguettePick in allBaguettes){
 			float distanceToBaguette = evaluateDistanceToObject(baguettePick.gameObject);
 			if(distanceToBaguette < closestDistanceToBaguette){
@@ -75,11 +99,19 @@ public class Bot : MonoBehaviour {
 
 	GameObject PickChaseTarget(){
 		GameObject chosenTarget = null;
+		float shortestDistance = float.MaxValue;
 		foreach(Pawn possibleTarget in arena.allPlayers){
 			if(possibleTarget == pawn || !possibleTarget.isAlive() ) continue;
-			chosenTarget = possibleTarget.gameObject;
-			Debug.Log("Chose to chase " + chosenTarget);
-			break;
+			GameObject possibleTargetObject = possibleTarget.gameObject;
+			if(possibleTargetObject.transform.position.x > rightBorder || possibleTargetObject.transform.position.x < leftBorder 
+			   || possibleTargetObject.transform.position.z > topBorder || possibleTargetObject.transform.position.z < bottomBorder )
+				continue;
+			float distance = evaluateDistanceToObject(possibleTargetObject);
+			if(distance  < shortestDistance){
+				chosenTarget = possibleTarget.gameObject;
+				shortestDistance = distance;
+			}
+			//Debug.Log("Chose to chase " + chosenTarget);
 		}
 		return chosenTarget;
 	}
@@ -99,7 +131,7 @@ public class Bot : MonoBehaviour {
 			if(chasing){
 				// pick another alive pawn to chase
 				target = PickChaseTarget();
-				movementTarget = target.transform.position;
+				movementTarget = (target != null)? target.transform.position : NO_TARGET;
 				// try to ram the target
 				//TODO>
 			}
