@@ -78,23 +78,22 @@ public class PlayerController : MonoBehaviour {
         switch(_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
-                _trail.renderer.material = Resources.Load("Materials/Red") as Material;
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Red") as Material;
-                _bikes[0].active = true;
+                _bikes[0].gameObject.SetActive(true);
                 break;
             case PlayerNum.PLAYER_TWO:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Blue") as Material;
-                _bikes[1].active = true;
+                _bikes[1].gameObject.SetActive(true);
                 break;
             case PlayerNum.PLAYER_THREE:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Yellow") as Material;
-                _bikes[2].active = true;
+				_bikes[2].gameObject.SetActive(true);
                 GetComponent<Bot>().isBot = true;
 				_isBot = true;
                 break;
             case PlayerNum.PLAYER_FOUR:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Purple") as Material;
-                _bikes[3].active = true;
+				_bikes[3].gameObject.SetActive(true);
                 break;
         }
 	}
@@ -153,7 +152,7 @@ public class PlayerController : MonoBehaviour {
         else
         {
             float rotateMult = (ROTATE_SPEED - STILL_ROTATE_SPEED)  * (1- Mathf.Abs(_velocity) / MAX_SPEED) + STILL_ROTATE_SPEED;
-            rotateRigidBodyAroundPointBy(rigidbody, _back.position, Vector3.up, x * rotateMult * Time.deltaTime);
+            rotateRigidBodyAroundPointBy(GetComponent<Rigidbody>(), _back.position, Vector3.up, x * rotateMult * Time.deltaTime);
             //transform.Rotate(new Vector3(0, x * rotateMult*Time.deltaTime, 0));
 
         }
