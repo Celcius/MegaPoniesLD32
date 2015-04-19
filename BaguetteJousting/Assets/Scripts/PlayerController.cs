@@ -22,8 +22,9 @@ public class PlayerController : MonoBehaviour {
     const float MAX_SPEED_ROTATE_MOD = ROTATE_SPEED - STILL_ROTATE_SPEED;
     const float MAX_SPEED = 12.0f;
     const float MAX_STILL_SPEED = 5.0f;
-    const float MAX_BACK_SPEED = -10.0f;
+    const float MAX_BACK_SPEED = -5.0f;
     const float ACCEL_DECREASE = 1000.0f;
+    const float ACCEL_PUSH_DECREASE = 0.1f;
     const float MAX_SCALE = 3.0f;
     const float MIN_SCALE = 1.0f;
     const float SCALE_VAL = 1.2f;
@@ -60,6 +61,11 @@ public class PlayerController : MonoBehaviour {
 			return _velocity;
 		}
 	}
+
+
+    Vector3 _pushDir;
+    float _pushAccel = 0;
+    float _pushSpeed = 0;
 
 
 	// Use this for initialization
@@ -168,8 +174,18 @@ public class PlayerController : MonoBehaviour {
         _acceleration = _acceleration + ACCEL_MOD * -input;
         _acceleration = Mathf.Clamp(_acceleration, -MAX_ACCEL, MAX_ACCEL);
 
+        _pushAccel += ACCEL_PUSH_DECREASE;
+        _pushSpeed -= _pushAccel;
+        if (_pushSpeed <= 0)
+        { 
+            _pushAccel = 0;
+            _pushSpeed = 0;
+        }
+
+
         dirVector *=_velocity* Time.deltaTime;
 
+        dirVector += _pushDir * _pushSpeed * Time.deltaTime;
 
         if (noInput)
         {
@@ -199,12 +215,23 @@ public class PlayerController : MonoBehaviour {
         _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
         if (dirVector.y > _baseY)
             dirVector.y = _baseY;
+
+
+
         if(transform.position.y - _baseY < 2.8f)
             rigidbody.MovePosition(transform.position + dirVector);
 
 
 	
 	}
+
+    public void addPushForce(Vector3 dir, float accel)
+    {
+        Debug.Log("PUSH" + accel);
+        _pushSpeed = accel;
+        _pushAccel = 0;
+        _pushDir = dir.normalized;
+    }
 
     float getMovement()
     {
@@ -284,9 +311,20 @@ public class PlayerController : MonoBehaviour {
     {
         switch (_playerNum)
         {
+            case PlayerNum.PLAYER_ONE:
+                if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.Joystick1Button0))
+                    GetComponent<Pawn>().useAction();
+                break;
             case PlayerNum.PLAYER_TWO:
-
-                if(Input.GetButtonDown("Fire1"))
+                if(Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.Joystick2Button0))
+                    GetComponent<Pawn>().useAction();
+                break;
+            case PlayerNum.PLAYER_THREE:
+                if (Input.GetKeyDown(KeyCode.Joystick3Button0))
+                    GetComponent<Pawn>().useAction();
+                break;
+            case PlayerNum.PLAYER_FOUR:
+                if (Input.GetKeyDown(KeyCode.Joystick4Button0))
                     GetComponent<Pawn>().useAction();
                 break;
             default:

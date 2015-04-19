@@ -17,6 +17,7 @@ public class Pickup : MonoBehaviour {
 
     protected PickupTypes pickUpType = PickupTypes.PickupNone;
 
+
     public PickupTypes PickUpType
     {
         get
@@ -67,6 +68,8 @@ public class Pickup : MonoBehaviour {
         
 
     }
+
+ 
 
     private IEnumerator pickupThrowCoroutine()
     {

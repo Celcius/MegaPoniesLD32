@@ -49,9 +49,12 @@ public class Carrier : MonoBehaviour {
 
     protected virtual void FixedUpdate()
     {
-		if(!this.IsCarrying()){
-            Debug.Log(Arena.instance.allPickups.Count);
+		if(!this.IsCarrying())
+        {
+//            Debug.Log(Arena.instance.allPickups.Count);
 			foreach (Pickup aPickup in Arena.instance.allPickups ){
+                if (aPickup == null)
+                    continue;
 				float distanceToPickup = Vector3.Distance(aPickup.gameObject.transform.position, this.gameObject.transform.position);
 				if (distanceToPickup <= this.grabRange && this.TryToPickup(aPickup)) {
 					break;
@@ -78,6 +81,11 @@ public class Carrier : MonoBehaviour {
     {
         onPickupDelegateCallback = del;
 
+    }
+
+    public void destroyedPickUp()
+    {
+        pickup = null;
     }
 
     
