@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour {
     enum PlayerNum
     {
         PLAYER_ONE,
-		PLAYER_BOT,
         PLAYER_TWO,
         PLAYER_THREE,
         PLAYER_FOUR
@@ -48,6 +47,8 @@ public class PlayerController : MonoBehaviour {
     Transform _front;
     Transform _back;
 
+	bool _isBot = false;
+
 	public float acceleration {			
 		get {
 			return _acceleration;
@@ -77,6 +78,8 @@ public class PlayerController : MonoBehaviour {
             case PlayerNum.PLAYER_TWO:
                 _trail.renderer.material = Resources.Load("Materials/Blue") as Material;
                 _bikes[1].active = true;
+				GetComponent<Bot>().isBot = true;
+				_isBot = true;
                 break;
             case PlayerNum.PLAYER_THREE:
                 _trail.renderer.material = Resources.Load("Materials/Yellow") as Material;
@@ -86,11 +89,6 @@ public class PlayerController : MonoBehaviour {
                 _trail.renderer.material = Resources.Load("Materials/Purple") as Material;
                 _bikes[3].active = true;
                 break;
-			case PlayerNum.PLAYER_BOT:
-				_trail.renderer.material = Resources.Load("Materials/Blue") as Material;
-				_bikes[1].active = true;
-			GetComponent<Bot>().isBot = true;
-				break;
         }
 	}
 
@@ -114,15 +112,12 @@ public class PlayerController : MonoBehaviour {
     {
         if (i == 0)
             _playerNum = PlayerNum.PLAYER_ONE;
-        if (i == 4) // TODO> change back here and in the enum
+        if (i == 1)
             _playerNum = PlayerNum.PLAYER_TWO;
         if (i == 2)
             _playerNum = PlayerNum.PLAYER_THREE;
         if (i == 3)
             _playerNum = PlayerNum.PLAYER_FOUR;
-		if (i == 1)
-			_playerNum = PlayerNum.PLAYER_BOT;
-
     }
 
 	public Vector3 FacingDirection(){
@@ -214,6 +209,11 @@ public class PlayerController : MonoBehaviour {
     float getMovement()
     {
         float val = 0;
+
+		if(_isBot){
+			return gameObject.GetComponent<Bot>().movementInput;
+		}
+
         switch (_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
@@ -238,9 +238,6 @@ public class PlayerController : MonoBehaviour {
             case PlayerNum.PLAYER_FOUR:
                 val= Input.GetAxis("Player4_axisMove");
                 break;
-			case PlayerNum.PLAYER_BOT:
-				val = gameObject.GetComponent<Bot>().movementInput;
-				break;
         }
         if (Mathf.Abs(val) < 0.8f)
             val = 0.0f;
@@ -250,6 +247,9 @@ public class PlayerController : MonoBehaviour {
     float getRotation()
     {
         float val = 0;
+		if(_isBot){
+			return gameObject.GetComponent<Bot>().rotationInput;
+		}
         switch(_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
@@ -274,9 +274,6 @@ public class PlayerController : MonoBehaviour {
             case PlayerNum.PLAYER_FOUR:
                 val = Input.GetAxis("Player4_axisX");
                 break;
-			case PlayerNum.PLAYER_BOT:
-				val = gameObject.GetComponent<Bot>().rotationInput;
-				break;
         }
         if (Mathf.Abs(val) < 0.8f)
             val = 0.0f;

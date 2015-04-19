@@ -53,20 +53,23 @@ public class Bot : MonoBehaviour {
 	GameObject pickBaguette(){
 		GameObject chosenBaguette = null;
 		List<Pickup> allBaguettes = arena.allPickups;
+		//Debug.Log ("allBaguettes" + allBaguettes);
 		float closestDistanceToBaguette = 9999999999f;
 		foreach(Pickup baguettePick in allBaguettes){
 			float distanceToBaguette = evaluateDistanceToObject(baguettePick.gameObject);
 			if(distanceToBaguette < closestDistanceToBaguette){
 				closestDistanceToBaguette = distanceToBaguette;
+				//Debug.Log("closestDistanceToBaguette" + closestDistanceToBaguette);
 				chosenBaguette = baguettePick.gameObject;
 			}
 		}
+		Debug.Log ("Chose baguete: " + chosenBaguette);
 		return chosenBaguette;
 	}
 
 	bool ShouldChase(){
 		// TODO:
-		return true;
+		return pawn.baguette != null;
 	}
 
 	GameObject PickChaseTarget(){
@@ -83,11 +86,11 @@ public class Bot : MonoBehaviour {
 	void Update () {
 		movementTarget = NO_TARGET;
 		if(!isBot) return;
-		if (pawn.baguette == null) {
+		if (pawn.baguette == null && arena.allPickups.Count > 0) {
 			if(target == null || target.GetComponent<Baguette>() == null ){
 				target = pickBaguette();
 			}
-			movementTarget = target.transform.position;
+			movementTarget = (target != null)? target.transform.position : NO_TARGET;
 		}
 		else {
 			// chose between chasing or running away
