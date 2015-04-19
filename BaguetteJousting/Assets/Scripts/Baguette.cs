@@ -40,11 +40,13 @@ public class Baguette : Pickup {
 
     public void resolveCollisionWithPawn(Collision collision, Pawn pawn)
     {
-        Debug.Log("killing pawn");
 
         foreach (ContactPoint c in collision.contacts)
         {
-            if (c.thisCollider.gameObject == frontCollisionObject)
+            string thisColTag = c.thisCollider.tag;
+            string otherColTag = c.otherCollider.tag;
+            if ((thisColTag.Equals("FrontOfWeapon") || thisColTag.Equals("SideOfWeapon")) &&
+                otherColTag.Equals("Player"))
             {
                 checkForKill(pawn);
                 break;
