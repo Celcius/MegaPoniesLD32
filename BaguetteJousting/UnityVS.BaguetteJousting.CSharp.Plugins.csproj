@@ -62,6 +62,8 @@
   <ItemGroup>
     <None Include="Assets\Materials\cloth.shader" />
     <None Include="Assets\Materials\cloth2.shader" />
+    <None Include="Assets\Materials\samich.shader" />
+    <None Include="Assets\Materials\samichblack.shader" />
     <None Include="Assets\Resources\Materials\floor.shader" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />

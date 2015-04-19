@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Arena.cs" />
     <Compile Include="Assets\Scripts\BackRef.cs" />
     <Compile Include="Assets\Scripts\Baguette.cs" />
+    <Compile Include="Assets\Scripts\Bot.cs" />
     <Compile Include="Assets\Scripts\Carrier.cs" />
     <Compile Include="Assets\Scripts\FrontRef.cs" />
     <Compile Include="Assets\Scripts\LevelGUI.cs" />
@@ -88,6 +89,8 @@
   <ItemGroup>
     <None Include="Assets\Materials\cloth.shader" />
     <None Include="Assets\Materials\cloth2.shader" />
+    <None Include="Assets\Materials\samich.shader" />
+    <None Include="Assets\Materials\samichblack.shader" />
     <None Include="Assets\Resources\Materials\floor.shader" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
     <None Include="Assets\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
