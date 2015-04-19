@@ -6,6 +6,11 @@ public class Baguette : Pickup {
     public GameObject lateralColliderObject;
     public GameObject frontCollisionObject;
 
+    BaguetteSpawner _spawner;
+
+
+    const float KILL_Z = -50.0f;
+
 	// Use this for initialization
 	
     void Start()
@@ -13,6 +18,16 @@ public class Baguette : Pickup {
 
         pickUpType = PickupTypes.PickupBaguette;
     }
+
+
+    void Update()
+    {
+        if (gameObject.transform.position.y < KILL_Z && _spawner != null)
+        {
+            _spawner.destroyBaguette(true);
+        }
+    }
+
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -68,6 +83,10 @@ public class Baguette : Pickup {
         pawn.GetComponent<Rigidbody>().AddForce(carrier.transform.right * 50, ForceMode.Impulse);
     }
 
+    public void registerSpawner(BaguetteSpawner spawner)
+    {
+        _spawner = spawner;
+    }
 
 
 
@@ -75,6 +94,9 @@ public class Baguette : Pickup {
     {
         Arena.instance.PlayerDied(pawn);
         GameObject.Destroy(pawn.gameObject);
+
+        if (_spawner != null)
+            _spawner.destroyBaguette(true);
     }
 
 }

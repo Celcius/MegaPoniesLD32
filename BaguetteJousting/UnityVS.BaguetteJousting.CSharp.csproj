@@ -65,6 +65,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BaguetteSpawner.cs" />
+    <Compile Include="Assets\MidPlayers.cs" />
     <Compile Include="Assets\Scripts\ActivateRenderer.cs" />
     <Compile Include="Assets\Scripts\Arena.cs" />
     <Compile Include="Assets\Scripts\BackRef.cs" />

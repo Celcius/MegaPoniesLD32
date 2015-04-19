@@ -15,6 +15,11 @@ public class Arena : MonoBehaviour {
 
     [SerializeField]
     List<Transform> _spawners;
+    [SerializeField]
+    List<BaguetteSpawner> _baguetteSpawners;
+
+    [SerializeField]
+    MidPlayers _mainCam;
 
 	//This is the public reference that other classes will use
 	public static Arena instance {
@@ -44,15 +49,22 @@ public class Arena : MonoBehaviour {
 		if(arena != null) Debug.Log("Arena opened!");
         else return;
 
-        int players = ServiceLocator.instance.getPlayers();
         _rounds = ServiceLocator.instance.getRounds();
         _currentRound = 0;
 
 
-        
-        for(int i = 0; i <players; i++)
+        spawnRound();
+
+	}
+	
+
+    void spawnRound()
+    {
+
+        int players = ServiceLocator.instance.getPlayers();
+        for (int i = 0; i < players; i++)
         {
-            if(i < _spawners.Count)
+            if (i < _spawners.Count)
             {
                 GameObject controller = (GameObject)Instantiate(Resources.Load("Prefabs/Player"));
 
@@ -62,12 +74,19 @@ public class Arena : MonoBehaviour {
                 controller.GetComponent<PlayerController>().setPlayerNum(i);
 
                 controller.name = "PLayer" + i;
+
+                _allPlayers.Add(controller.GetComponent<Pawn>());
             }
         }
 
+        for (int i = 0; i < _baguetteSpawners.Count; i++)
+        {
+            ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();
+        }
 
-	}
-	
+        _mainCam.setPlayers(_allPlayers);
+    }
+
 	// Use this for initialiList<Pickup> allPickups = new List<Pickup>();zation
 	void Start () {
 		_allPickups = new List<Pickup>(GameObject.FindObjectsOfType<Pickup>());
