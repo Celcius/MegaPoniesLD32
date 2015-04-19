@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Pawn : MonoBehaviour {
 	string pawnName = "Joe";
-    Baguette baguette;
+    public Baguette baguette;
 	bool alive = true;
 	
 	float killZ = -20.0f;

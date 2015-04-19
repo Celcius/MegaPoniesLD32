@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
         PLAYER_ONE,
         PLAYER_TWO,
         PLAYER_THREE,
-        PLAYER_FOUR,
+        PLAYER_FOUR
     };
 
     const float DIR_MULT = 0.3f;
@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour {
     const float ACCEL_ROTATE_MOD = 0.05f;
     const float MAX_ACCEL_ROTATE = 0.5f;
     const float MAX_ACCEL = 0.4f;
-    const float ROTATE_SPEED = 200.0f;
-    const float STILL_ROTATE_SPEED = 110.5f;
+    const float ROTATE_SPEED = 300.0f;
+    const float STILL_ROTATE_SPEED = 190.5f;
     const float MAX_SPEED_ROTATE_MOD = ROTATE_SPEED - STILL_ROTATE_SPEED;
     const float MAX_SPEED = 12.0f;
     const float MAX_STILL_SPEED = 5.0f;
@@ -48,9 +48,26 @@ public class PlayerController : MonoBehaviour {
     Transform _front;
     Transform _back;
 
+	bool _isBot = false;
+
+	public float acceleration {			
+		get {
+			return _acceleration;
+			}
+	}
+
+	public float velocity {			
+		get {
+			return _velocity;
+		}
+	}
+
+
     Vector3 _pushDir;
     float _pushAccel = 0;
     float _pushSpeed = 0;
+
+
 	// Use this for initialization
 	void Start () {
         _front = GetComponentInChildren<FrontRef>().transform;
@@ -71,6 +88,8 @@ public class PlayerController : MonoBehaviour {
             case PlayerNum.PLAYER_THREE:
                 _trail.renderer.material = Resources.Load("Materials/Yellow") as Material;
                 _bikes[2].active = true;
+                GetComponent<Bot>().isBot = true;
+				_isBot = true;
                 break;
             case PlayerNum.PLAYER_FOUR:
                 _trail.renderer.material = Resources.Load("Materials/Purple") as Material;
@@ -105,11 +124,15 @@ public class PlayerController : MonoBehaviour {
             _playerNum = PlayerNum.PLAYER_THREE;
         if (i == 3)
             _playerNum = PlayerNum.PLAYER_FOUR;
-
     }
-	
+
+	public Vector3 FacingDirection(){
+		return (_front.position - _back.position).normalized;
+		}
+
 	// Update is called once per frame
 	void Update () {
+
         checkForActionButtonPressed();
         if (_front == null || _back == null)
             return;
@@ -215,6 +238,11 @@ public class PlayerController : MonoBehaviour {
     float getMovement()
     {
         float val = 0;
+
+		if(_isBot){
+			return gameObject.GetComponent<Bot>().movementInput;
+		}
+
         switch (_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
@@ -248,6 +276,9 @@ public class PlayerController : MonoBehaviour {
     float getRotation()
     {
         float val = 0;
+		if(_isBot){
+			return gameObject.GetComponent<Bot>().rotationInput;
+		}
         switch(_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
