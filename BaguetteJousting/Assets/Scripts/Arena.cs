@@ -68,15 +68,16 @@ public class Arena : MonoBehaviour {
 	
 	
 	public void PlayerDied(Pawn player){
-		bool onePlayerAlive = false;
+		int playersAlive = 0;
 		foreach (Pawn p in allPlayers){
 			if(p.isAlive()){
-				onePlayerAlive = true;
-				break;
+				playersAlive += 1;
+				if (playersAlive > 1)
+					break;
 			}
 		}
-		if(! onePlayerAlive){
-			Debug.Log("No players alive");
+		if (playersAlive < 2){
+			Debug.Log("Only one player left.");
 			MatchOver();
 		}
 	}
