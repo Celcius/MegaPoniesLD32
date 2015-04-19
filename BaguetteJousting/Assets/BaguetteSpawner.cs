@@ -31,6 +31,7 @@ public class BaguetteSpawner : MonoBehaviour {
 
     public Baguette spawnBaguette()
     {
+        _spawnTimer = 0.0f;
         if (_baguette != null)
         {
             Destroy(_baguette);
@@ -55,6 +56,8 @@ public class BaguetteSpawner : MonoBehaviour {
 
         if (respawn)
             _spawnTimer = 5.0f;
+        else
+            _spawnTimer = 0.0f;
 
         if (_baguette == null)
             return;

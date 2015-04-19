@@ -17,13 +17,13 @@ public class PlayerController : MonoBehaviour {
     const float ACCEL_ROTATE_MOD = 0.05f;
     const float MAX_ACCEL_ROTATE = 0.5f;
     const float MAX_ACCEL = 0.4f;
-    const float ROTATE_SPEED = 200.0f;
-    const float STILL_ROTATE_SPEED = 110.5f;
+    const float ROTATE_SPEED = 300.0f;
+    const float STILL_ROTATE_SPEED = 190.5f;
     const float MAX_SPEED_ROTATE_MOD = ROTATE_SPEED - STILL_ROTATE_SPEED;
     const float MAX_SPEED = 12.0f;
     const float MAX_STILL_SPEED = 5.0f;
     const float MAX_BACK_SPEED = -5.0f;
-    const float ACCEL_DECREASE = 1000.0f;
+    const float ACCEL_DECREASE =800.0f;
     const float ACCEL_PUSH_DECREASE = 0.1f;
     const float MAX_SCALE = 3.0f;
     const float MIN_SCALE = 1.0f;
@@ -78,22 +78,23 @@ public class PlayerController : MonoBehaviour {
         switch(_playerNum)
         {
             case PlayerNum.PLAYER_ONE:
+                _trail.renderer.material = Resources.Load("Materials/Red") as Material;
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Red") as Material;
-                _bikes[0].gameObject.SetActive(true);
+                _bikes[0].active = true;
                 break;
             case PlayerNum.PLAYER_TWO:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Blue") as Material;
-                _bikes[1].gameObject.SetActive(true);
-				GetComponent<Bot>().isBot = true;
-				_isBot = true;
+                _bikes[1].active = true;
                 break;
             case PlayerNum.PLAYER_THREE:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Yellow") as Material;
-                _bikes[2].gameObject.SetActive(true);
+                _bikes[2].active = true;
+                GetComponent<Bot>().isBot = true;
+				_isBot = true;
                 break;
             case PlayerNum.PLAYER_FOUR:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Purple") as Material;
-                _bikes[3].gameObject.SetActive(true);
+                _bikes[3].active = true;
                 break;
         }
 	}
@@ -132,7 +133,8 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        checkForActionButtonPressed();
+
+         checkForActionButtonPressed();
         if (_front == null || _back == null)
             return;
 
@@ -151,8 +153,8 @@ public class PlayerController : MonoBehaviour {
         else
         {
             float rotateMult = (ROTATE_SPEED - STILL_ROTATE_SPEED)  * (1- Mathf.Abs(_velocity) / MAX_SPEED) + STILL_ROTATE_SPEED;
-            //rotateRigidBodyAroundPointBy(rigidbody,_back.position)
-            transform.Rotate(new Vector3(0, x * rotateMult*Time.deltaTime, 0));
+            rotateRigidBodyAroundPointBy(rigidbody, _back.position, Vector3.up, x * rotateMult * Time.deltaTime);
+            //transform.Rotate(new Vector3(0, x * rotateMult*Time.deltaTime, 0));
 
         }
 
@@ -213,9 +215,9 @@ public class PlayerController : MonoBehaviour {
 
         _representation.localScale = new Vector3(scaleVal,scaleVal,scaleVal);
         scaleVal = 1/scaleVal*0.5f;
-        _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
-        if (dirVector.y > _baseY)
-            dirVector.y = _baseY;
+   //     _shadow.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+     //   if (dirVector.y > _baseY)
+       //     dirVector.y = _baseY;
 
 
 

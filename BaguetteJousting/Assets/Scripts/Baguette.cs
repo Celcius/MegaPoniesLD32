@@ -108,7 +108,7 @@ public class Baguette : Pickup {
     {
         Debug.Log("SUGOU PUSSSSHSHS");
         Vector3 forceDir = carrier != null ? carrier.transform.right : throwDirection;
-        float pushStr = 50.0f;
+        float pushStr = 75.0f;
 
         if (baguetteMode == BaguetteMode.EmpoweredMode)
             pushStr = 1000f;

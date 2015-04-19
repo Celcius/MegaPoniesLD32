@@ -84,6 +84,7 @@ public class Bot : MonoBehaviour {
 	}
 
 	void Update () {
+     
 		movementTarget = NO_TARGET;
 		if(!isBot) return;
 		if (pawn.baguette == null && arena.allPickups.Count > 0) {
