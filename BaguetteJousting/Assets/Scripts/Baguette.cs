@@ -148,7 +148,7 @@ public class Baguette : Pickup {
         float pushStr = 75.0f;
 
         if (baguetteMode == BaguetteMode.EmpoweredMode)
-            pushStr = 1000f;
+            pushStr = 30000f;
 
         pawn.GetComponent<PlayerController>().addPushForce(forceDir, pushStr);
     }

@@ -88,10 +88,10 @@ public class Arena : MonoBehaviour {
                 spawnPlayer(i);
             }
         }
-
+        int players = ServiceLocator.instance.getPlayers();
         if(!_spawned)
         { 
-            int players = ServiceLocator.instance.getPlayers();
+           
             for (int i = 0; i < players; i++)
             {
                 if (i < _spawners.Count)
@@ -111,6 +111,9 @@ public class Arena : MonoBehaviour {
 
         for (int i = 0; i < _baguetteSpawners.Count; i++)
         {
+            if((players ==2 && i <2)
+               ||  (players == 3 && (i== 0 || i >1))
+               ||  (players == 4))
              ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();
   
         }
