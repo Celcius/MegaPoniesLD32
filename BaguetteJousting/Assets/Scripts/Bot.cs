@@ -122,7 +122,7 @@ public class Bot : MonoBehaviour {
 
 	bool ShouldChase(){
 		// TODO:
-		return pawn.baguette != null;
+		//return pawn.baguette != null;
 		return true;
 	}
 
@@ -182,30 +182,43 @@ public class Bot : MonoBehaviour {
 		}
 		return bestSpot;
 	}
+
+	Vector3 GetClosestSpotBehind(){
+		float closestDistance = float.MaxValue;
+		Vector3 bestSpot = transform.position - movementController.FacingDirection() * 8 ;
+		return bestSpot;
+	}
 	
 	void EvaluateMovementTarget(){
 		if (movementTarget == NO_TARGET)
 			return;
-		
-		if (! FrontIsClear (10.0f) || (!PathIsClear(movementTarget) && Vector3.Distance(transform.position, movementTarget) < 10.0f ) || (!PathIsClear(movementTarget) && Vector3.Distance(transform.position, movementTarget) > 25.0f )) 
+
+		if (! FrontIsClear (5.0f) || (!PathIsClear (movementTarget) && Vector3.Distance (transform.position, movementTarget) < 10.0f)) {
+			movementTarget = GetClosestSpotBehind();
+			movementTarget = new Vector3 (Mathf.Clamp(movementTarget.x,leftBorder,rightBorder), movementTarget.y, Mathf.Clamp(movementTarget.z, bottomBorder,topBorder));
+
+		}
+
+		if (! FrontIsClear (15.0f)) 
 		{
 			timeUntillNextThought += 0.5f;
 			Vector3 bestSpot = GetClosestReachableSpot ();
 			if(bestSpot != NO_TARGET){
 				movementTarget = bestSpot;
 			}
-			else movementTarget = movementTarget - (transform.position - movementTarget).normalized * 4  + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f,Random.Range(-5.0f,5.0f));
+			else movementTarget = movementTarget - (transform.position - movementTarget).normalized * Vector3.Distance(transform.position, movementTarget) + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f,Random.Range(-5.0f,5.0f));
 
 			movementTarget = new Vector3 (Mathf.Clamp(movementTarget.x,leftBorder,rightBorder), movementTarget.y, Mathf.Clamp(movementTarget.z, bottomBorder,topBorder));
 		}
-		else
-			Debug.Log ("all clear");
+		//else
+	//		Debug.Log ("all clear");
 	}
 
 	void Think(){
-		movementTarget = NO_TARGET;
 		if(!isBot) return;
+		//movementTarget = NO_TARGET;
 		if (pawn.baguette == null && arena.allPickups.Count > 0) {
+			Debug.Log("still baguettes available");
 			//if(target == null || target.GetComponent<Baguette>() == null ){
 			target = pickBaguette();
 			movementTarget = (target != null)? target.transform.position : NO_TARGET;
@@ -225,6 +238,7 @@ public class Bot : MonoBehaviour {
 			else {
 				// pick a safe spot to move to
 				//TODO>
+				Debug.Log(gameObject + " is braindead");
 			}
 		}
 

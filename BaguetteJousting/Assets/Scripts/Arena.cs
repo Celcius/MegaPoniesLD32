@@ -45,6 +45,12 @@ public class Arena : MonoBehaviour {
         }
     }
     
+	public void AddPickup(Pickup baguette){
+		_allPickups.Add (baguette);
+	}
+	public void RemovePickup(Pickup baguette){
+		_allPickups.Remove (baguette);
+	}
 	public List<Pawn> allPlayers{
 		get {
 			return _allPlayers;
