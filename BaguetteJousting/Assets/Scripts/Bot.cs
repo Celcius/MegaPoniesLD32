@@ -208,7 +208,7 @@ public class Bot : MonoBehaviour {
 			if(bestSpot != NO_TARGET){
 				movementTarget = bestSpot;
 			}
-			else movementTarget = movementTarget + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f,Random.Range(-5.0f,5.0f));
+			else movementTarget = movementTarget + new Vector3(Random.Range(-10.0f, 10.0f), 0.0f,Random.Range(-15.0f,15.0f));
 
 			movementTarget = new Vector3 (Mathf.Clamp(movementTarget.x,leftBorder,rightBorder), movementTarget.y, Mathf.Clamp(movementTarget.z, bottomBorder,topBorder));
 		}
