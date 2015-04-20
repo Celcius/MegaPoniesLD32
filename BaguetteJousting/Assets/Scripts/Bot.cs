@@ -73,7 +73,6 @@ public class Bot : MonoBehaviour {
 	}
 
 	bool FrontIsClear(float maxDistance){
-		Debug.Log (gameObject + "checking front is clear -- moving to " + movementTarget);
 		bool hit = Physics.Raycast (transform.position, movementController.FacingDirection (), maxDistance);
 		Color color = hit ? Color.green : Color.red;
 		Debug.DrawRay(transform.position, movementController.FacingDirection () * maxDistance, color);
@@ -82,7 +81,6 @@ public class Bot : MonoBehaviour {
 	}
 
 	bool PathIsClear(Vector3 position){
-		Debug.Log (gameObject + "checking path is clear -- moving to " + position);
 		float distance = Vector3.Distance (transform.position, position);
 		bool hit = Physics.Raycast (transform.position, position - transform.position, distance);
 		Color color = (hit)? Color.green : Color.red;
@@ -147,7 +145,7 @@ public class Bot : MonoBehaviour {
 
 		GameObject possibleTargetObject = null;
 		float shortestDistance = float.MaxValue;
-		float secondShortestDistance = -1.0f;
+//		float secondShortestDistance = -1.0f;
 		foreach(Pawn possibleTarget in arena.allPlayers){
 			if(possibleTarget == pawn || !possibleTarget.isAlive() ) continue;
 			possibleTargetObject = possibleTarget.gameObject;
@@ -161,7 +159,7 @@ public class Bot : MonoBehaviour {
 			}
 		}
 		chosenTarget = (chosenTarget != null) ? chosenTarget : possibleTargetObject;
-		Debug.Log("Chose to chase " + chosenTarget);
+		//Debug.Log("Chose to chase " + chosenTarget);
 		return chosenTarget;
 	}
 
@@ -183,30 +181,25 @@ public class Bot : MonoBehaviour {
 		return bestSpot;
 	}
 
-	Vector3 GetClosestSpotBehind(){
-		float closestDistance = float.MaxValue;
-		Vector3 bestSpot = transform.position - movementController.FacingDirection() * 8 ;
-		return bestSpot;
-	}
+
 	
 	void EvaluateMovementTarget(){
-		if (movementTarget == NO_TARGET)
+		if (movementTarget == NO_TARGET) {
+			Debug.Log("no target");
 			return;
-
-		if (! FrontIsClear (5.0f) || (!PathIsClear (movementTarget) && Vector3.Distance (transform.position, movementTarget) < 10.0f)) {
-			movementTarget = GetClosestSpotBehind();
-			movementTarget = new Vector3 (Mathf.Clamp(movementTarget.x,leftBorder,rightBorder), movementTarget.y, Mathf.Clamp(movementTarget.z, bottomBorder,topBorder));
-
 		}
+			
 
-		if (! FrontIsClear (15.0f)) 
+
+
+		if (! FrontIsClear (25.0f)) 
 		{
-			timeUntillNextThought += 0.5f;
+			timeUntillNextThought += 0.4f;
 			Vector3 bestSpot = GetClosestReachableSpot ();
 			if(bestSpot != NO_TARGET){
 				movementTarget = bestSpot;
 			}
-			else movementTarget = movementTarget - (transform.position - movementTarget).normalized * Vector3.Distance(transform.position, movementTarget) + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f,Random.Range(-5.0f,5.0f));
+			else movementTarget = movementTarget + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f,Random.Range(-5.0f,5.0f));
 
 			movementTarget = new Vector3 (Mathf.Clamp(movementTarget.x,leftBorder,rightBorder), movementTarget.y, Mathf.Clamp(movementTarget.z, bottomBorder,topBorder));
 		}
@@ -218,7 +211,6 @@ public class Bot : MonoBehaviour {
 		if(!isBot) return;
 		//movementTarget = NO_TARGET;
 		if (pawn.baguette == null && arena.allPickups.Count > 0) {
-			Debug.Log("still baguettes available");
 			//if(target == null || target.GetComponent<Baguette>() == null ){
 			target = pickBaguette();
 			movementTarget = (target != null)? target.transform.position : NO_TARGET;
