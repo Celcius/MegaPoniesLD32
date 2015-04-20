@@ -87,9 +87,8 @@ public class Baguette : Pickup {
         thrower = carrier;
         isAvaiableForPickup = false;
         baguetteMode = BaguetteMode.EmpoweredMode;
-        dropped();
         throwDirection = carrier.transform.right;
-        carrier = null;
+		dropped();
         Rigidbody rigBody = gameObject.GetComponent<Rigidbody>();
         if (!GetComponent<Rigidbody>())
             rigBody = gameObject.AddComponent<Rigidbody>();

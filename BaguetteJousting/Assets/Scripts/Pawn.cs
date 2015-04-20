@@ -5,11 +5,15 @@ public class Pawn : MonoBehaviour {
 	string pawnName = "Joe";
     public Baguette baguette;
 	bool alive = true;
+	GameObject oceanOfDeath;
+
+	bool drowningCountdownStarted = false;
 	
 	float killZ = -20.0f;
 
     void Start()
     {
+		oceanOfDeath = GameObject.Find ("OceanOfDeath");
         Carrier carrier = GetComponent<Carrier>();
         if (carrier)
             carrier.setOnPickUpCallBack(onItemPickup);
@@ -35,9 +39,23 @@ public class Pawn : MonoBehaviour {
 	
 	
 	void Update () {
-		if(gameObject.transform.position.y < killZ){
+
+		float pawnY = gameObject.transform.position.y;
+		if(pawnY < killZ){
 			this.Kill();
 		}
+
+		if (pawnY < oceanOfDeath.transform.position.y && !drowningCountdownStarted)
+			StartCoroutine ("drowningCountDown");
+	}
+
+	IEnumerator drowningCountDown()
+	{
+		drowningCountdownStarted = true;
+		yield return new WaitForSeconds (2);
+		float pawnY = gameObject.transform.position.y;
+		if (pawnY < oceanOfDeath.transform.position.y)
+			gameObject.GetComponent<Rigidbody> ().detectCollisions = false;
 	}
 
     void onItemPickup(Pickup item)
