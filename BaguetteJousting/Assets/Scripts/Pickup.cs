@@ -38,7 +38,6 @@ public class Pickup : MonoBehaviour {
 //		if(someCarrier.IsCarrying() ){
 //			return false; // or maybe make the
 //		}
-		Arena.instance.RemovePickup (this);
         Rigidbody rBody = GetComponent<Rigidbody>();
 
         if (rBody)
@@ -96,7 +95,6 @@ public class Pickup : MonoBehaviour {
 	
 	public virtual void dropped () {
         transform.SetParent(null);
-		Arena.instance.AddPickup (this);
 		if (carrier) {
 			carrier.pickup = null;
 			carrier = null;

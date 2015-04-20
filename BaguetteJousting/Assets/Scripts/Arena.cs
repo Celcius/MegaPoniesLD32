@@ -45,12 +45,6 @@ public class Arena : MonoBehaviour {
         }
     }
     
-	public void AddPickup(Pickup baguette){
-		_allPickups.Add (baguette);
-	}
-	public void RemovePickup(Pickup baguette){
-		_allPickups.Remove (baguette);
-	}
 	public List<Pawn> allPlayers{
 		get {
 			return _allPlayers;
@@ -114,6 +108,7 @@ public class Arena : MonoBehaviour {
             Destroy(pickup.gameObject);
         }
         _allPickups.Clear();
+
         for (int i = 0; i < _baguetteSpawners.Count; i++)
         {
              ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();

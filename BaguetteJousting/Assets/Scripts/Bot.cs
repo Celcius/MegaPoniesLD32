@@ -42,6 +42,15 @@ public class Bot : MonoBehaviour {
 
 	bool chasing = true;
 
+	List<Pickup> AvailablePickups(){
+		List<Pickup> availablePickups = new List<Pickup> ();
+		foreach(Pickup baguettePick in arena.allPickups){
+			if (baguettePick.carrier == null)
+				availablePickups.Add(baguettePick);
+		}
+
+		return availablePickups;
+	}
 
 	void Start () {
 		timeUntillNextThought = Random.Range (0.0f, dumbness);
@@ -102,7 +111,7 @@ public class Bot : MonoBehaviour {
 
 	GameObject pickBaguette(){
 		GameObject chosenBaguette = null;
-		List<Pickup> allBaguettes = arena.allPickups;
+		List<Pickup> allBaguettes = AvailablePickups();
 		//Debug.Log ("allBaguettes" + allBaguettes);
 		float closestDistanceToBaguette = float.MaxValue;
 		foreach(Pickup baguettePick in allBaguettes){
@@ -194,7 +203,7 @@ public class Bot : MonoBehaviour {
 
 		if (! FrontIsClear (25.0f)) 
 		{
-			timeUntillNextThought += 0.4f;
+			timeUntillNextThought += 0.3f;
 			Vector3 bestSpot = GetClosestReachableSpot ();
 			if(bestSpot != NO_TARGET){
 				movementTarget = bestSpot;
@@ -210,7 +219,7 @@ public class Bot : MonoBehaviour {
 	void Think(){
 		if(!isBot) return;
 		//movementTarget = NO_TARGET;
-		if (pawn.baguette == null && arena.allPickups.Count > 0) {
+		if (pawn.GetComponent<Carrier>().pickup == null && AvailablePickups().Count > 0) {
 			//if(target == null || target.GetComponent<Baguette>() == null ){
 			target = pickBaguette();
 			movementTarget = (target != null)? target.transform.position : NO_TARGET;
@@ -224,6 +233,11 @@ public class Bot : MonoBehaviour {
 				target = PickChaseTarget();
 				movementTarget = (target != null)? target.transform.position : NO_TARGET;
 				EvaluateMovementTarget();
+				if (dumbness < 0.5f && Vector3.Dot( (target.transform.position - transform.position).normalized, movementController.FacingDirection()) > 0.95f ){
+					float distance = Vector3.Distance(transform.position,target.transform.position);
+					if(distance < 40.0f && distance > 25.0f)
+						pawn.useAction();
+				}
 				// try to ram the target
 				//TODO>
 			}
