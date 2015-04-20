@@ -57,7 +57,7 @@ public class Baguette : Pickup {
     public void OnCollisionEnter(Collision collision)
     {
         Pawn player = collision.gameObject.GetComponent<Pawn>();
-        if (player)
+        if (player && carrier != null)
             resolveCollisionWithPawn(collision, player);
     }
 
@@ -110,7 +110,6 @@ public class Baguette : Pickup {
 
 	void canNowBePickedUp()
 	{
-
 		isAvaiableForPickup = true;
 		thrower = null;
 		baguetteMode = BaguetteMode.NormalMode;
@@ -123,6 +122,7 @@ public class Baguette : Pickup {
 		float lasTime = Time.time;
 		while(true)
 		{
+			Debug.Log (timeElapsed);
 			timeElapsed += Time.time - lasTime;
 			Rigidbody rBody = GetComponent<Rigidbody> ();
 			if (rBody && rBody.velocity.magnitude < 1) {
