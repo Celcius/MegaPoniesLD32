@@ -23,7 +23,7 @@ public class Bot : MonoBehaviour {
 	float leftBorder = - float.MaxValue ;
 
 	public float dumbness = 0.8f;
-	float timeUntillNextThought = 0.0f;
+	float timeUntillNextThought;
 
 	public float movementInput {			
 		get {
@@ -42,6 +42,7 @@ public class Bot : MonoBehaviour {
 
 
 	void Start () {
+		timeUntillNextThought = Random.Range (0.0f, dumbness);
 		arena = Arena.instance;
 		pawn = GetComponent<Pawn> ();
 		if (pawn == null) {
@@ -84,6 +85,7 @@ public class Bot : MonoBehaviour {
 		//Debug.Log ("allBaguettes" + allBaguettes);
 		float closestDistanceToBaguette = float.MaxValue;
 		foreach(Pickup baguettePick in allBaguettes){
+			if(baguettePick.carrier != null) continue;
 			float distanceToBaguette = evaluateDistanceToObject(baguettePick.gameObject);
 			if(distanceToBaguette < closestDistanceToBaguette){
 				closestDistanceToBaguette = distanceToBaguette;
@@ -98,6 +100,7 @@ public class Bot : MonoBehaviour {
 	bool ShouldChase(){
 		// TODO:
 		return pawn.baguette != null;
+		return true;
 	}
 
 	GameObject LastManStanding(){
