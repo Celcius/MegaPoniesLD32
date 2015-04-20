@@ -252,7 +252,6 @@ public class PlayerController : MonoBehaviour {
 
     public void addPushForce(Vector3 dir, float accel)
     {
-        Debug.Log("PUSH" + accel);
         _pushSpeed = accel;
         _pushAccel = 0;
         _pushDir = dir.normalized;
