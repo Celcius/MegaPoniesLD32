@@ -6,6 +6,8 @@ public class Baguette : Pickup {
 
     private BaguetteMode baguetteMode;
     private Vector3 throwDirection = Vector3.zero;
+	private AudioSource smallThud;
+	private AudioSource bigThud;
 
     enum BaguetteMode
     {
@@ -25,6 +27,9 @@ public class Baguette : Pickup {
 
         pickUpType = PickupTypes.PickupBaguette;
         baguetteMode = BaguetteMode.NormalMode;
+		smallThud = gameObject.GetComponents<AudioSource> ()[0];
+		bigThud = gameObject.GetComponents<AudioSource> ()[1];
+
     }
 
 
@@ -70,9 +75,14 @@ public class Baguette : Pickup {
             string otherColTag = c.otherCollider.tag;
             if (thisColTag.Equals("Weapon")  &&  otherColTag.Equals("Player"))
             {
+				bigThud.Play();
                 baguetteSugoiPush(pawn);
                 break;
             }
+			else if(thisColTag.Equals("Weapon")  &&  otherColTag.Equals("Weapon"))
+			{
+				smallThud.Play();
+			}
         }
     }
 
@@ -134,7 +144,6 @@ public class Baguette : Pickup {
 
     void baguetteSugoiPush(Pawn pawn)
     {
-        Debug.Log("SUGOU PUSSSSHSHS");
         Vector3 forceDir = carrier != null ? carrier.transform.right : throwDirection;
         float pushStr = 75.0f;
 
