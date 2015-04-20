@@ -116,7 +116,9 @@ public class Arena : MonoBehaviour {
         _allPickups.Clear();
         for (int i = 0; i < _baguetteSpawners.Count; i++)
         {
-            if (i < players)
+            if((players ==2 && i <2)
+               ||  (players == 3 && (i== 0 || i >1))
+               ||  (players == 4))
              ((BaguetteSpawner)_baguetteSpawners[i]).spawnBaguette();
   
         }
