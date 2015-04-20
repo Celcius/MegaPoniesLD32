@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour {
 
     enum PlayerNum
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        GetComponent<AudioSource>().Stop();
         _front = GetComponentInChildren<FrontRef>().transform;
         _back = GetComponentInChildren<BackRef>().transform;
         _baseY = transform.position.y;
@@ -244,7 +246,7 @@ public class PlayerController : MonoBehaviour {
             GetComponent<Rigidbody>().MovePosition(transform.position + dirVector);
 
 
-	
+        checkSound();
 	}
 
     public void addPushForce(Vector3 dir, float accel)
@@ -333,6 +335,52 @@ public class PlayerController : MonoBehaviour {
         if (Mathf.Abs(val) < 0.8f)
             val = 0.0f;
         return val;
+    }
+
+    void playHonk()
+    {
+        //AudioClip clip = Resources.Load("185806__jkaas28__bike-horn") as AudioClip;
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+    }
+    void checkSound()
+    {
+        if (_isBot)
+        {
+            return;
+        }
+        switch (_playerNum)
+        {
+            case PlayerNum.PLAYER_ONE:
+                if (Input.GetKey(KeyCode.LeftShift)
+                    | Input.GetKey(KeyCode.Joystick1Button1)
+                    || Input.GetKey(KeyCode.Joystick1Button2)
+                    || Input.GetKey(KeyCode.Joystick1Button3))
+                    playHonk();
+                break;
+            case PlayerNum.PLAYER_TWO:
+                if (Input.GetKey(KeyCode.RightShift)
+                    || Input.GetKey(KeyCode.Joystick2Button1)
+                    || Input.GetKey(KeyCode.Joystick2Button2)
+                    || Input.GetKey(KeyCode.Joystick2Button3))
+                    playHonk();
+                break;
+                    playHonk();
+                break;
+            case PlayerNum.PLAYER_THREE:
+                if (Input.GetKey(KeyCode.Joystick3Button1)
+                    || Input.GetKey(KeyCode.Joystick3Button2)
+                    || Input.GetKey(KeyCode.Joystick3Button3))
+                    playHonk();
+                break;
+            case PlayerNum.PLAYER_FOUR:
+                if (Input.GetKey(KeyCode.Joystick4Button1)
+                    || Input.GetKey(KeyCode.Joystick4Button2)
+                    || Input.GetKey(KeyCode.Joystick4Button3))
+                    playHonk();
+                break;
+                break;
+        }
     }
 
     void checkForActionButtonPressed()
