@@ -3,6 +3,8 @@ using System.Collections;
 
 public class AcceptSettings : MonoBehaviour {
 
+    [SerializeField]
+    int scene = 1;
 
 	// Update is called once per frame
 	void Update () {
@@ -13,7 +15,7 @@ public class AcceptSettings : MonoBehaviour {
     || Input.GetKeyDown(KeyCode.Joystick3Button0)
     || Input.GetKeyDown(KeyCode.Joystick4Button0))
         {
-            GetComponent<LevelLoader>().LevelLoad(2);
+            GetComponent<LevelLoader>().LevelLoad(scene);
         }
 	
 	}
