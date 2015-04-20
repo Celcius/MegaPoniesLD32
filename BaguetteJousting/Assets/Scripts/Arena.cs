@@ -68,8 +68,6 @@ public class Arena : MonoBehaviour {
     void spawnRound()
     {
 
-
-
         roundController.roundStart();
         roundStarted = false;
 
@@ -107,6 +105,7 @@ public class Arena : MonoBehaviour {
         {
             Pickup pickup = _allPickups[i];
             pickup.GetComponent<Baguette>().destroyBaguette();
+            Destroy(pickup.gameObject);
         }
         _allPickups.Clear();
         for (int i = 0; i < _baguetteSpawners.Count; i++)

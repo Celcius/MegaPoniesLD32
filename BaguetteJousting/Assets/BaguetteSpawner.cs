@@ -62,9 +62,7 @@ public class BaguetteSpawner : MonoBehaviour {
         if (_baguette == null)
             return;
         Arena.instance.allPickups.Remove(_baguette.GetComponent<Pickup>());
-        _baguette.gameObject.SetActive(false);
-        _baguette.transform.position = transform.position;
-        _baguette.transform.rotation = transform.rotation;
+        Destroy(_baguette);
 
     }
 }
