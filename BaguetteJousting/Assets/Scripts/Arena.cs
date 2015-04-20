@@ -104,16 +104,7 @@ public class Arena : MonoBehaviour {
             }
         }
 
-		playersText.Clear ();
-		for (int i = 0; i < _allPlayers.Count; i++) {
-			playersText.Add(GameObject.Find ("ScoreP" + (i+1)).GetComponent<Text>());
-			Debug.Log("playersText; " + playersText);
-		}
-
-		for (int i = 0; i < _allPlayers.Count; i++) {
-			playersText[i].text = "Player "+(i+1)+": " + _scores[i];
-		}
-
+        updateText();
 
         for (int i = 0; i < _allPickups.Count; i++)
         {
@@ -142,6 +133,35 @@ public class Arena : MonoBehaviour {
 
         _mainCam.setPlayers(_allPlayers);
         _playing = true;
+    }
+
+    void updateText()
+    {
+        playersText.Clear();
+        for (int i = 0; i < _allPlayers.Count; i++)
+        {
+            playersText.Add(GameObject.Find("ScoreP" + (i + 1)).GetComponent<Text>());
+            Debug.Log("playersText; " + playersText);
+        }
+
+        for (int i = 0; i < _allPlayers.Count; i++)
+        {
+            string text = "";
+            int j = 0;
+            while (j < _scores[i])
+            {
+                text += "★";
+                j++;
+            }
+            while (j < _rounds)
+            {
+                text += "☆";
+                j++;
+            }
+
+            playersText[i].text = text;
+        }
+
     }
 
     void spawnPlayer(int i)
@@ -199,57 +219,24 @@ public class Arena : MonoBehaviour {
     {
             
         _currentRound++;
-        
-        if(_currentRound >= _rounds)
+
+        bool finished = false;
+        for (int i = 0; i < _scores.Length; i ++ )
         {
-            Debug.Log("End MAtch");
-            _playing = false;
+            finished |= _scores[i] >=_rounds;
+        }
 
-            int currentVictors = 0;
-            int currentScore = 0;
-            
-            for (int i = 0; i < _scores.Length; i++)
-            {
-                if (_scores[i] > currentScore)
-                {
-                    currentVictors = 1;
-                    currentScore = _scores[i];
-                    _victors[0] = 0;
-                    _victors[1] = 0;
-                    _victors[2] = 0;
-                    _victors[3] = 0;
-                    _victors[i] = 1;
-                }
-                else if(_scores[i] == currentScore)
-                {
-                    currentVictors++;
-                    _victors[i] = 1;
-                }
-            }
-            if(currentVictors > 1)
-            {
-                spawnRound();
-            }
-            else
-            {
-                MatchOver();
-            }
-
-
+        _playing = false;
+        if(!finished)
+        {
+            spawnRound();
         }
         else
         {
-            Debug.Log("End Round");
-
-            _victors[0] = 0;
-            _victors[1] = 0;
-            _victors[2] = 0;
-            _victors[3] = 0;
-
-            _playing = false;
-            spawnRound();
-            
+            MatchOver();
+            updateText();
         }
+         
     }
 	void MatchOver(){
 
