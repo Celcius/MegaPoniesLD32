@@ -104,7 +104,7 @@ public class Arena : MonoBehaviour {
             }
         }
 
-
+		playersText.Clear ();
 		for (int i = 0; i < _allPlayers.Count; i++) {
 			playersText.Add(GameObject.Find ("ScoreP" + (i+1)).GetComponent<Text>());
 			Debug.Log("playersText; " + playersText);
