@@ -13,6 +13,24 @@ public class textUpdater : MonoBehaviour {
         
     }
 
+    public void updateBotString()
+    {
+        if (_slider != null)
+        {
+            if(_slider.value ==1)
+            {
+                this.GetComponent<Text>().text = "Easy Bots";
+                ServiceLocator.instance._hardBots = false;
+            }
+            else
+            {
+                this.GetComponent<Text>().text = "Hard Bots";
+                ServiceLocator.instance._hardBots = true;
+            }
+        }
+
+    }
+
 	// Use this for initialization
 	void Start () {
 	

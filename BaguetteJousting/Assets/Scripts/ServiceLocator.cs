@@ -16,6 +16,8 @@ public class ServiceLocator
 
     public bool[] _bots = { false, false, false, false };
 
+    public bool _hardBots = false;
+
 	//This is the public reference that other classes will use
     public static ServiceLocator instance
     {

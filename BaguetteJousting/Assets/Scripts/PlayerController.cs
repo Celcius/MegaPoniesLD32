@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour {
 
     void setBot()
     {
+        bool isHard = ServiceLocator.instance._hardBots;
         GetComponent<Bot>().isBot = true;
         _isBot = true;
     }
