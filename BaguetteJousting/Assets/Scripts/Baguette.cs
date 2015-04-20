@@ -57,7 +57,7 @@ public class Baguette : Pickup {
     public void OnCollisionEnter(Collision collision)
     {
         Pawn player = collision.gameObject.GetComponent<Pawn>();
-        if (player && carrier != null)
+        if (player && thrower != null)
             resolveCollisionWithPawn(collision, player);
     }
 
