@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Arena : MonoBehaviour {
 	List<Pickup> _allPickups = new List<Pickup>();
@@ -13,6 +14,9 @@ public class Arena : MonoBehaviour {
     public bool roundStarted = false;
     public int[] _scores = {0,0,0,0};
     public int[] _victors = { 0, 0, 0, 0 };
+
+	List<Text> playersText = new List<Text>();
+
     bool _playing = false;
     [SerializeField]
     RoundL roundController;
@@ -59,7 +63,7 @@ public class Arena : MonoBehaviour {
 
         _rounds = ServiceLocator.instance.getRounds();
         _currentRound = 0;
-
+	
         spawnRound();
 
 	}
@@ -67,7 +71,6 @@ public class Arena : MonoBehaviour {
 
     void spawnRound()
     {
-
         roundController.roundStart();
         roundStarted = false;
 
@@ -100,6 +103,15 @@ public class Arena : MonoBehaviour {
                 }
             }
         }
+
+		for (int i = 0; i < _allPlayers.Count; i++) {
+			playersText.Add(GameObject.Find ("ScoreP" + (i+1)).GetComponent<Text>());
+			Debug.Log("playersText; " + playersText);
+		}
+
+		for (int i = 0; i < _allPlayers.Count; i++) {
+			playersText[i].text = "Player "+(i+1)+": " + _scores[i];
+		}
 
         for (int i = 0; i < _allPickups.Count; i++)
         {
