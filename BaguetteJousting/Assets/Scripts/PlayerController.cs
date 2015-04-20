@@ -118,7 +118,8 @@ public class PlayerController : MonoBehaviour {
     void setBot()
     {
         bool isHard = ServiceLocator.instance._hardBots;
-        GetComponent<Bot>().isBot = true;
+		GetComponent<Bot> ().dumbness = (isHard) ? 0.1f : 0.8f;
+		GetComponent<Bot>().isBot = true;
         _isBot = true;
     }
     public int getPlayerIndex()
