@@ -14,6 +14,8 @@ public class ServiceLocator
 
     public int getRounds() { return _rounds; }
 
+    public bool[] _bots = { false, false, false, false };
+
 	//This is the public reference that other classes will use
     public static ServiceLocator instance
     {

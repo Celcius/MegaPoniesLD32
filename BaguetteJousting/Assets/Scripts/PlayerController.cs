@@ -81,24 +81,43 @@ public class PlayerController : MonoBehaviour {
             case PlayerNum.PLAYER_ONE:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Red") as Material;
                 _bikes[0].gameObject.SetActive(true);
+                if (ServiceLocator.instance._bots[0])
+                {
+                    setBot();
+                }
                 break;
             case PlayerNum.PLAYER_TWO:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Blue") as Material;
                 _bikes[1].gameObject.SetActive(true);
+                if (ServiceLocator.instance._bots[1])
+                {
+                    setBot();
+                }
                 break;
             case PlayerNum.PLAYER_THREE:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Yellow") as Material;
 				_bikes[2].gameObject.SetActive(true);
-                GetComponent<Bot>().isBot = true;
-				_isBot = true;
+                if (ServiceLocator.instance._bots[2])
+                {
+                    setBot();
+                }
                 break;
             case PlayerNum.PLAYER_FOUR:
                 _trail.GetComponent<Renderer>().material = Resources.Load("Materials/Purple") as Material;
 				_bikes[3].gameObject.SetActive(true);
+                if (ServiceLocator.instance._bots[3])
+                {
+                    setBot();
+                }
                 break;
         }
 	}
 
+    void setBot()
+    {
+        GetComponent<Bot>().isBot = true;
+        _isBot = true;
+    }
     public int getPlayerIndex()
     {
         switch(_playerNum)

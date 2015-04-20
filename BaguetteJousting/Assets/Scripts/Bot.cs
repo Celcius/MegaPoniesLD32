@@ -67,9 +67,9 @@ public class Bot : MonoBehaviour {
 		float checkDistance = 25.0f;
 		float distance = Vector3.Distance (theObject.transform.position,transform.position);
 		//TODO>
-		Debug.Log ("checking ray");
+//		Debug.Log ("checking ray");
 		if (FrontIsClear(checkDistance)) {
-			Debug.Log("Object in the way");
+	//		Debug.Log("Object in the way");
 			distance += checkDistance;
 		}
 		return distance;
