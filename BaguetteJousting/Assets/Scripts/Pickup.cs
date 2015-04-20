@@ -96,6 +96,8 @@ public class Pickup : MonoBehaviour {
 	
 	public virtual void dropped () {
         transform.SetParent(null);
+		if (carrier)
+			carrier.pickup = null;
 	}
 
     public bool isPickedUp()
