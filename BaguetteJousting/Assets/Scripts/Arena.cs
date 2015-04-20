@@ -101,6 +101,7 @@ public class Arena : MonoBehaviour {
             }
         }
 
+
         for (int i = 0; i < _allPickups.Count; i++)
         {
             Pickup pickup = _allPickups[i];
@@ -108,6 +109,14 @@ public class Arena : MonoBehaviour {
             Destroy(pickup.gameObject);
         }
         _allPickups.Clear();
+
+        Baguette[] missingB =  FindObjectsOfType<Baguette>();
+        for (int i = 0; i < missingB.Length; i ++ )
+        {
+            Baguette b = missingB[i];
+            b.destroyBaguette();
+            Destroy(b.gameObject);
+        }
 
         for (int i = 0; i < _baguetteSpawners.Count; i++)
         {
