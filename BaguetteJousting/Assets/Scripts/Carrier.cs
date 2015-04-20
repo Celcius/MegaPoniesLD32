@@ -7,7 +7,7 @@ public class Carrier : MonoBehaviour {
     public delegate void OnPickupDelegate(Pickup pickup);
 	
 	public Pickup pickup;
-	float grabRange = 10.0f;
+	float grabRange = 14.0f;
 	[SerializeField]
 	Transform _pickupSocket;
     OnPickupDelegate onPickupDelegateCallback;
