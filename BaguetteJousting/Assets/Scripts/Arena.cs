@@ -12,6 +12,7 @@ public class Arena : MonoBehaviour {
     public int _currentRound = 1;
     public bool roundStarted = false;
     public int[] _scores = {0,0,0,0};
+    public int[] _victors = { 0, 0, 0, 0 };
     bool _playing = false;
     [SerializeField]
     RoundL roundController;
@@ -20,6 +21,10 @@ public class Arena : MonoBehaviour {
     List<Transform> _spawners;
     [SerializeField]
     List<BaguetteSpawner> _baguetteSpawners;
+    
+    [SerializeField]
+    WinScreen _win;
+
 
     [SerializeField]
     MidPlayers _mainCam;
@@ -62,8 +67,12 @@ public class Arena : MonoBehaviour {
 
     void spawnRound()
     {
+
+
+
         roundController.roundStart();
         roundStarted = false;
+
         for (int i = 0; i < _allPlayers.Count; i++)
         {
             Pawn pawn = _allPlayers[i];
@@ -71,21 +80,26 @@ public class Arena : MonoBehaviour {
         }
         _allPlayers.Clear();
 
-        int players = ServiceLocator.instance.getPlayers();
-        for (int i = 0; i < players; i++)
+        // spawn for tiebreaker
+        bool _spawned = false;
+        for (int i = 0; i < _victors.Length;i++ )
         {
-            if (i < _spawners.Count)
+            if(_victors[i] == 1)
             {
-                GameObject controller = (GameObject)Instantiate(Resources.Load("Prefabs/Player"));
+                _spawned = true;
+                spawnPlayer(i);
+            }
+        }
 
-                controller.transform.position = _spawners[i].position;
-                controller.transform.rotation = _spawners[i].rotation;
-
-                controller.GetComponent<PlayerController>().setPlayerNum(i);
-
-                controller.name = "PLayer" + i;
-
-                _allPlayers.Add(controller.GetComponent<Pawn>());
+        if(!_spawned)
+        { 
+            int players = ServiceLocator.instance.getPlayers();
+            for (int i = 0; i < players; i++)
+            {
+                if (i < _spawners.Count)
+                {
+                    spawnPlayer(i);
+                }
             }
         }
 
@@ -105,6 +119,19 @@ public class Arena : MonoBehaviour {
         _playing = true;
     }
 
+    void spawnPlayer(int i)
+    {
+        GameObject controller = (GameObject)Instantiate(Resources.Load("Prefabs/Player"));
+
+        controller.transform.position = _spawners[i].position;
+        controller.transform.rotation = _spawners[i].rotation;
+
+        controller.GetComponent<PlayerController>().setPlayerNum(i);
+
+        controller.name = "PLayer" + i;
+
+        _allPlayers.Add(controller.GetComponent<Pawn>());
+    }
     public void startRound()
     {
         roundStarted = true;
@@ -151,12 +178,48 @@ public class Arena : MonoBehaviour {
         if(_currentRound >= _rounds)
         {
             Debug.Log("End MAtch");
-            MatchOver();
             _playing = false;
+
+            int currentVictors = 0;
+            int currentScore = 0;
+            
+            for (int i = 0; i < _scores.Length; i++)
+            {
+                if (_scores[i] > currentScore)
+                {
+                    currentVictors = 1;
+                    currentScore = _scores[i];
+                    _victors[0] = 0;
+                    _victors[1] = 0;
+                    _victors[2] = 0;
+                    _victors[3] = 0;
+                    _victors[i] = 1;
+                }
+                else if(_scores[i] == currentScore)
+                {
+                    currentVictors++;
+                    _victors[i] = 1;
+                }
+            }
+            if(currentVictors > 1)
+            {
+                spawnRound();
+            }
+            else
+            {
+                MatchOver();
+            }
+
+
         }
         else
         {
             Debug.Log("End Round");
+
+            _victors[0] = 0;
+            _victors[1] = 0;
+            _victors[2] = 0;
+            _victors[3] = 0;
 
             _playing = false;
             spawnRound();
@@ -166,6 +229,18 @@ public class Arena : MonoBehaviour {
 	void MatchOver(){
 
    		LevelGUI.instance.ShowEndGUI();
+        int victor = 0;
+        int currentScore = 0;
+        for(int i = 0; i < _scores.Length;i++)
+        {
+            if(_scores[i] > currentScore)
+            {
+                victor = i+1;
+                currentScore = _scores[i];
+            }
+        }
+        _win.setVictor(victor);
+
         //Application.LoadLevel("MainMenu");
 
 	}
