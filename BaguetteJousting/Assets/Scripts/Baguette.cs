@@ -122,7 +122,6 @@ public class Baguette : Pickup {
 		float lasTime = Time.time;
 		while(true)
 		{
-			Debug.Log (timeElapsed);
 			timeElapsed += Time.time - lasTime;
 			Rigidbody rBody = GetComponent<Rigidbody> ();
 			if (rBody && rBody.velocity.magnitude < 1) {
@@ -148,13 +147,9 @@ public class Baguette : Pickup {
         float pushStr = 75.0f;
 
         if (baguetteMode == BaguetteMode.EmpoweredMode)
-            pushStr = 1000f;
-
-        if (carrier == null && throwDirection != Vector3.zero)
-            pushStr = 100.0f;
+            pushStr = 150.0f;
 
 
-        Debug.Log(pushStr + " " + forceDir);
 
         pawn.GetComponent<PlayerController>().addPushForce(forceDir, pushStr);
         throwDirection = Vector3.zero;
@@ -167,7 +162,7 @@ public class Baguette : Pickup {
 
     public override void dropped()
     {
-        baguetteMode = BaguetteMode.NormalMode;
+        //baguetteMode = BaguetteMode.NormalMode;
         base.dropped();
     }
 
