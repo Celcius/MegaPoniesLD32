@@ -208,7 +208,7 @@ public class Bot : MonoBehaviour {
 			if(bestSpot != NO_TARGET){
 				movementTarget = bestSpot;
 			}
-			else movementTarget = movementTarget + new Vector3(Random.Range(-10.0f, 10.0f), 0.0f,Random.Range(-15.0f,15.0f));
+			else movementTarget = movementTarget + new Vector3(Random.Range(-10.0f, 15.0f), 0.0f,Random.Range(-15.0f,15.0f));
 
 			movementTarget = new Vector3 (Mathf.Clamp(movementTarget.x,leftBorder,rightBorder), movementTarget.y, Mathf.Clamp(movementTarget.z, bottomBorder,topBorder));
 		}
@@ -233,7 +233,7 @@ public class Bot : MonoBehaviour {
 				target = PickChaseTarget();
 				movementTarget = (target != null)? target.transform.position : NO_TARGET;
 				EvaluateMovementTarget();
-				if (dumbness < 0.5f && Vector3.Dot( (target.transform.position - transform.position).normalized, movementController.FacingDirection()) > 0.95f ){
+				if (target != null && dumbness < 0.5f && Vector3.Dot( (target.transform.position - transform.position).normalized, movementController.FacingDirection()) > 0.95f ){
 					float distance = Vector3.Distance(transform.position,target.transform.position);
 					if(distance < 40.0f && distance > 25.0f)
 						pawn.useAction();
