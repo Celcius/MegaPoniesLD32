@@ -148,9 +148,16 @@ public class Baguette : Pickup {
         float pushStr = 75.0f;
 
         if (baguetteMode == BaguetteMode.EmpoweredMode)
-            pushStr = 30000f;
+            pushStr = 1000f;
+
+        if (carrier == null && throwDirection != Vector3.zero)
+            pushStr = 100.0f;
+
+
+        Debug.Log(pushStr + " " + forceDir);
 
         pawn.GetComponent<PlayerController>().addPushForce(forceDir, pushStr);
+        throwDirection = Vector3.zero;
     }
 
     public void registerSpawner(BaguetteSpawner spawner)
