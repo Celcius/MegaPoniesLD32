@@ -187,14 +187,14 @@ public class Bot : MonoBehaviour {
 		if (movementTarget == NO_TARGET)
 			return;
 		
-		if (! FrontIsClear (20.0f) || !PathIsClear(movementTarget) ) 
+		if (! FrontIsClear (10.0f) || (!PathIsClear(movementTarget) && Vector3.Distance(transform.position, movementTarget) < 10.0f ) || (!PathIsClear(movementTarget) && Vector3.Distance(transform.position, movementTarget) > 25.0f )) 
 		{
 			timeUntillNextThought += 0.5f;
 			Vector3 bestSpot = GetClosestReachableSpot ();
 			if(bestSpot != NO_TARGET){
 				movementTarget = bestSpot;
 			}
-			else movementTarget = movementTarget + new Vector3(Random.Range(-15.0f, 15.0f), 0.0f,Random.Range(-15.0f,15.0f));
+			else movementTarget = movementTarget - (transform.position - movementTarget).normalized * 4  + new Vector3(Random.Range(-5.0f, 5.0f), 0.0f,Random.Range(-5.0f,5.0f));
 
 			movementTarget = new Vector3 (Mathf.Clamp(movementTarget.x,leftBorder,rightBorder), movementTarget.y, Mathf.Clamp(movementTarget.z, bottomBorder,topBorder));
 		}
