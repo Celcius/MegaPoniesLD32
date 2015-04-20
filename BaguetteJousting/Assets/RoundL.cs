@@ -64,25 +64,25 @@ public class RoundL : MonoBehaviour {
                     case roundState.ROUND_STATE_3:
                         roundText1.text = "3";
                         roundText2.text = "3";
-                        _image.sizeDelta = new Vector2(116, 116);
+                        _image.sizeDelta = new Vector2(90, 90);
                         time = 1.0f;
                         return;
                     case roundState.ROUND_STATE_2:
                         roundText1.text = "2";
                         roundText2.text = "2";
-                        _image.sizeDelta = new Vector2(116, 116);
+                        _image.sizeDelta = new Vector2(90, 90);
                         time = 1.0f;
                         return;
                     case roundState.ROUND_STATE_1:
                         roundText1.text = "1";
                         roundText2.text = "1";
-                        _image.sizeDelta = new Vector2(116, 116);
+                        _image.sizeDelta = new Vector2(90, 90);
                         time = 1.0f;
                         return;
                     case roundState.ROUND_STATE_START:
                         roundText1.text = "Grab Your Baguettes!";
                         roundText2.text = "Grab Your Baguettes!";
-                        _image.sizeDelta = new Vector2(700, 116);
+                        _image.sizeDelta = new Vector2(550, 90);
                         time = 1.0f;
                         return;
                 }
