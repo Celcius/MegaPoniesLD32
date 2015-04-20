@@ -70,9 +70,9 @@ public class Bot : MonoBehaviour {
 		float checkDistance = 25.0f;
 		float distance = Vector3.Distance (theObject.transform.position,transform.position);
 		//TODO>
-//		Debug.Log ("checking ray");
-		if (FrontIsClear(checkDistance)) {
-	//		Debug.Log("Object in the way");
+		//Debug.Log ("checking ray");
+		if (!FrontIsClear(checkDistance)) {
+			//Debug.Log("Object in the way");
 			distance += checkDistance;
 		}
 		return distance;
@@ -100,10 +100,28 @@ public class Bot : MonoBehaviour {
 		return pawn.baguette != null;
 	}
 
+	GameObject LastManStanding(){
+		GameObject lastManStanding = null;
+		foreach (Pawn possibleTarget in arena.allPlayers) {
+			if(possibleTarget.isAlive()){
+				if(lastManStanding != null){
+					return null;
+				}
+				lastManStanding = possibleTarget.gameObject;
+			}
+		}
+		Debug.Log ("LAST MAN! " + lastManStanding);
+		return lastManStanding;
+	}
+
 	GameObject PickChaseTarget(){
-		GameObject chosenTarget = null;
+		GameObject chosenTarget = null; //LastManStanding();
+		if (chosenTarget != null)
+			return chosenTarget;
+
 		GameObject possibleTargetObject = null;
 		float shortestDistance = float.MaxValue;
+		float secondShortestDistance = -1.0f;
 		foreach(Pawn possibleTarget in arena.allPlayers){
 			if(possibleTarget == pawn || !possibleTarget.isAlive() ) continue;
 			possibleTargetObject = possibleTarget.gameObject;
@@ -115,9 +133,9 @@ public class Bot : MonoBehaviour {
 				chosenTarget = possibleTarget.gameObject;
 				shortestDistance = distance;
 			}
-			//Debug.Log("Chose to chase " + chosenTarget);
 		}
-		//chosenTarget = (chosenTarget != null) ? chosenTarget : possibleTargetObject;
+		chosenTarget = (chosenTarget != null) ? chosenTarget : possibleTargetObject;
+		Debug.Log("Chose to chase " + chosenTarget);
 		return chosenTarget;
 	}
 
