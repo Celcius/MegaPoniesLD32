@@ -78,11 +78,11 @@ public class Baguette : Pickup {
 
     public override void throwPickup()
     {
-        StartCoroutine("throwBaguetteCoroutine");
+		throwBaguetteCoroutine ();
 
     }
 
-    private IEnumerator throwBaguetteCoroutine()
+    private void throwBaguetteCoroutine()
     {
         thrower = carrier;
         isAvaiableForPickup = false;
@@ -96,12 +96,41 @@ public class Baguette : Pickup {
 
         rigBody.AddForce(throwDirection * 100, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(SECONDS_BEFORE_BAGUETTE_IS_PICKABLE_AFTER_THROW);
-
-        isAvaiableForPickup = true;
-        thrower = null;
-        baguetteMode = BaguetteMode.NormalMode;
+		StartCoroutine("checkForPickupAvailable");
     }
+
+	void canNowBePickedUp()
+	{
+
+		isAvaiableForPickup = true;
+		thrower = null;
+		baguetteMode = BaguetteMode.NormalMode;
+	}
+
+	IEnumerator checkForPickupAvailable()
+	{
+		yield return new WaitForSeconds(0.2f);
+		float timeElapsed = 0;
+		float lasTime = Time.time;
+		while(true)
+		{
+			timeElapsed += Time.time - lasTime;
+			Rigidbody rBody = GetComponent<Rigidbody> ();
+			if (rBody && rBody.velocity.magnitude < 1) {
+				canNowBePickedUp();
+				break;
+			}
+			else if(timeElapsed > SECONDS_BEFORE_BAGUETTE_IS_PICKABLE_AFTER_THROW)
+			{
+				canNowBePickedUp();
+				break;
+			}
+			lasTime = Time.time;
+			yield return new WaitForSeconds(0.2f);
+		}
+		return true;
+
+	}
 
 
     void baguetteSugoiPush(Pawn pawn)

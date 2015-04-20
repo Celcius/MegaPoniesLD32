@@ -22,6 +22,9 @@ public class Bot : MonoBehaviour {
 	float rightBorder = float.MaxValue;
 	float leftBorder = - float.MaxValue ;
 
+	public float dumbness = 0.8f;
+	float timeUntillNextThought = 0.0f;
+
 	public float movementInput {			
 		get {
 			return _movementInput;
@@ -99,10 +102,11 @@ public class Bot : MonoBehaviour {
 
 	GameObject PickChaseTarget(){
 		GameObject chosenTarget = null;
+		GameObject possibleTargetObject = null;
 		float shortestDistance = float.MaxValue;
 		foreach(Pawn possibleTarget in arena.allPlayers){
 			if(possibleTarget == pawn || !possibleTarget.isAlive() ) continue;
-			GameObject possibleTargetObject = possibleTarget.gameObject;
+			possibleTargetObject = possibleTarget.gameObject;
 			if(possibleTargetObject.transform.position.x > rightBorder || possibleTargetObject.transform.position.x < leftBorder 
 			   || possibleTargetObject.transform.position.z > topBorder || possibleTargetObject.transform.position.z < bottomBorder )
 				continue;
@@ -113,16 +117,16 @@ public class Bot : MonoBehaviour {
 			}
 			//Debug.Log("Chose to chase " + chosenTarget);
 		}
+		//chosenTarget = (chosenTarget != null) ? chosenTarget : possibleTargetObject;
 		return chosenTarget;
 	}
 
-	void Update () {
-     
+	void Think(){
 		movementTarget = NO_TARGET;
 		if(!isBot) return;
 		if (pawn.baguette == null && arena.allPickups.Count > 0) {
 			//if(target == null || target.GetComponent<Baguette>() == null ){
-				target = pickBaguette();
+			target = pickBaguette();
 			movementTarget = (target != null)? target.transform.position : NO_TARGET;
 		}
 		else {
@@ -141,6 +145,14 @@ public class Bot : MonoBehaviour {
 			}
 		}
 
+	}
+	void Update () {
+		timeUntillNextThought -= Time.deltaTime;
+		if (timeUntillNextThought <= 0.0f) {
+			Think ();
+			timeUntillNextThought = dumbness;
+		}
+    	
 		MoveTo(movementTarget);
 	}
 
